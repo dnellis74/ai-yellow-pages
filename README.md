@@ -204,6 +204,26 @@ Status describes third-party agent access, not a business's own in-app
 assistant (e.g. Amazon blocks outside agents while running Alexa for
 Shopping in-app; Rufus was retired May 13, 2026).
 
+### Help and support chatbots
+
+Many sites run a help or support chatbot. Treat it by what it does,
+not by what it is called:
+
+- Q&A-only (answers questions, looks up order status or policies,
+  no actions taken) does NOT count: `platformAgent` none, and
+  capability is unaffected. This is the existing rule.
+- Action-taking (changes or cancels an order, starts a return, issues
+  a refund, modifies a reservation) counts as `platformAgent` partial
+  when it is the business's own assistant. Precedent: Chewy Cai,
+  IKEA Billie, Gap, Best Buy, AAFES Maven, and Verizon order-changers.
+- Open question, tracked in TODO.md: whether action-taking help bots
+  should also lift capability (to B partial), or whether capability
+  stays reserved for shopping actions (search, cart, checkout). Until
+  decided, help-bot actions do not change capability grades.
+- Future verification passes should record a site's help chatbot and
+  whether it takes actions, alongside the robots.txt, UCP, and
+  llms.txt checks.
+
 ## Verification history
 
 - 2026-10-26 (Instacart platform-mediated upgrade): platform-mediated
@@ -528,7 +548,7 @@ Notes:
 - Push rule: the GitHub repo is public, and pushes use an explicit
   file allowlist (exactly `index.html`, `data.js`, `README.md`,
   `build_portable.js`, `check-access.js`, `adjudicate.js`,
-  `.gitignore`, `.env.example`). `.env` and run outputs must never be added to
+  `.gitignore`, `.env.example`, `TODO.md`). `.env` and run outputs must never be added to
   a push paths file. `.env` and `prompts/` are gitignored, but report
   JSONs (`access-report.json`, `adjudicated-report.json`) and verdict
   files are not — only the allowlist keeps them out of the repo — so
