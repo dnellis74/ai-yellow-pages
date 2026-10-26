@@ -226,6 +226,33 @@ not by what it is called:
 
 ## Verification history
 
+- 2026-10-26 — Category expansion, checked pass (22 entries, 129 → 151).
+  Method: check-access.js deterministic pass (robots.txt named-agent
+  rules, UCP, llms.txt) plus one announcement-search round per group,
+  adjudicated by hand under the standing rules. Verdicts: limited/B+
+  (8) — Marriott, Hilton via Google AI Mode hotel booking (live US
+  Aug 27, 2026, partner merchant of record); Hyatt, Expedia,
+  Booking.com, Ticketmaster, StubHub, SeatGeek via live ChatGPT apps
+  (booking finishes on the brand's own platform); browse/C- (5) —
+  Enterprise, Hertz (named shopping agents, no sitewide block), Avis,
+  Rover (substantive llms.txt), TaskRabbit (browse allowed, /book/*
+  barred); announced/D (2) — DoorDash, Uber Eats (ChatGPT apps
+  announced for later in 2026, not live); unknown (7) — Domino's,
+  Starbucks, Chipotle, AMC, Uber, Lyft, Thumbtack. Script suggestions
+  rejected: Booking.com browse (robots names only Applebot, a
+  single-vendor crawler, per the Tops precedent). First-party agents:
+  DoorDash Messages text-to-order (beta), Uber Eats Cart Assistant
+  (beta), Ticketmaster and SeatGeek conversational search tools,
+  Uber in-app voice booking (rolling out, live status unconfirmed) —
+  all partial. Depth unassessed for all 22 in this scoped pass (no
+  sales figures looked up), so overall is ungraded for all 22 despite
+  graded capability. Gaps, not absence: SeatGeek, AMC, Uber, Marriott,
+  Hyatt fetches 403/network/406-walled; Hilton llms.txt timed out.
+  Correction the same night: 22 unverified prototype placeholders
+  were added, then reverted before any push, after Dave required real
+  data; the entries above are the checked replacements, and no
+  placeholder version was ever published.
+
 - 2026-10-26 (Instacart platform-mediated upgrade): platform-mediated
   LIVE agent channels now count toward capability: agent cart-building
   via Instacart's Clementine assistant and the ChatGPT + Instacart app

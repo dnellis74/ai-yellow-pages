@@ -8,19 +8,20 @@ date added and the source or prior note cited per item.
 ## Expansion list (picks, in order, 2026-10-24)
 
 Said when retail was done at 118 entries; re-supplied 2026-10-26
-because it had never been written down.
+because it had never been written down. Checked pass 2026-10-26
+added top-player entries with real evidence for all four categories;
+depth grades for the 22 are still open (see Open).
 
-- [ ] Travel: airlines, hotels, OTAs, rental cars. Airlines DONE
-  (11 majors merged 2026-10-25); hotels, OTAs, rental cars open.
-  Rationale: agent booking is one of the most active areas, and it
-  pairs with Ocala planning.
-- [ ] Food delivery and restaurants: DoorDash, Uber Eats, Domino's,
-  Starbucks, Chipotle. Agent food ordering is already live in places,
-  and it is daily use.
-- [ ] Tickets and entertainment: Ticketmaster, StubHub, SeatGeek, AMC.
-  Tickets are a natural agent purchase: event, seats, price.
-- [ ] Rides and home services: Uber, Lyft, TaskRabbit, Thumbtack,
-  Rover. Services are the next frontier after goods.
+- [x] Travel: airlines, hotels, OTAs, rental cars. Airlines DONE
+  (11 majors merged 2026-10-25); hotels (Marriott, Hilton, Hyatt),
+  OTAs (Expedia, Booking.com), rental cars (Enterprise, Hertz, Avis)
+  added 2026-10-26, checked.
+- [x] Food delivery and restaurants: DoorDash, Uber Eats, Domino's,
+  Starbucks, Chipotle. All five added 2026-10-26, checked.
+- [x] Tickets and entertainment: Ticketmaster, StubHub, SeatGeek, AMC.
+  All four added 2026-10-26, checked.
+- [x] Rides and home services: Uber, Lyft, TaskRabbit, Thumbtack,
+  Rover. All five added 2026-10-26, checked.
 
 ## Open
 
@@ -49,6 +50,12 @@ because it had never been written down.
 - [ ] Verify Southwest ChatGPT plugin handoff mechanics (2026-10-25).
   The plugin is discovery only today; if payment ever completes
   in-chat, Southwest could move from C- toward B+.
+- [ ] Assign depth grades and sales figures for the 22 expansion
+  entries (2026-10-26 pass left depth ungraded, so overall is
+  ungraded for all 22 despite graded capability).
+- [ ] Re-check gap-walled expansion entries via browser or a later
+  run (SeatGeek, AMC, Uber, Marriott, Hyatt fetches 403/network/
+  406-walled; Hilton llms.txt timed out).
 - [ ] Decide: do action-taking help chatbots upgrade capability?
   (2026-10-26; see README Verification standard, "Help and support
   chatbots"). Q&A-only bots do not count (existing rule). Help bots
