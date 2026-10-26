@@ -206,6 +206,29 @@ Shopping in-app; Rufus was retired May 13, 2026).
 
 ## Verification history
 
+- 2026-10-26 (Instacart platform-mediated upgrade): platform-mediated
+  LIVE agent channels now count toward capability: agent cart-building
+  via Instacart's Clementine assistant and the ChatGPT + Instacart app
+  counts as B+ (cart-only) for confirmed partner chains, with the
+  shopper paying in Instacart; partial, store-dependent coverage counts
+  as B. 12 chains upgrade to B+ (Aldi, H-E-B, ShopRite, Hy-Vee,
+  Sprouts Farmers Market, Tops, Smart & Final, Raley's, Market Basket,
+  Stater Bros. Markets, Grocery Outlet, Weis Markets), 2 to B partial
+  (Piggly Wiggly, Save-A-Lot), 7 already-B+ chains gain an "Instacart"
+  channel only (Kroger, Albertsons, Publix, Stop & Shop, Wegmans,
+  Giant Eagle, Schnucks), and Instacart itself is corrected from
+  checkout/A+/A- to limited/B+/B+ (in-chat ACP Instant Checkout retired
+  March 2026; live scope is cart-building). Announced-only white-label
+  Cart Assistant (Kroger/Sprouts/Aldi/Publix) is never the justifying
+  channel; human-app-only presence does not count. Market Basket is
+  included despite its prior note (platform rule, same logic as Ulta's
+  ChatGPT plugin). WinCo Foods, Ingles Markets, and Defense Commissary
+  Agency are unchanged (no verified Instacart partnership). Cards now
+  show a channel tag row for entries with channels. Directory status
+  now unknown 34, limited 36, checkout 17, announced 9; capability
+  B+ 22, B 11, A+ 17, D 15, ungraded 31; overall B+ 22, A- 15, B- 23,
+  C+ 18, ungraded 31. Portable copy rebuilt.
+
 - 2026-10-25 (check-access run on 50 unknown entries, adjudicated by
   hand): `check-access.js` run over all 50 unknown-status entries; 44
   stay unknown, 4 move to browse on live llms.txt evidence

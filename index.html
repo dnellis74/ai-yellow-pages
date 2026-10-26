@@ -84,7 +84,7 @@
 <div id="detail" hidden></div>
 
 <footer>
-  <p>Outbound links may be affiliate links: if you buy through one, this site may earn a commission at no extra cost to you. Status labels describe third-party AI agent access, not a business's own in-app assistant. Each card shows three grades: Capability (what an agent can actually do, pure automation), Depth (depth of products offered, shoppable online), and Overall (60% capability + 40% depth); provisional grades mark announced or onboarding integrations whose target grade is not yet live, and — means ungraded, not failing. See <code>data.js</code> for the full rubric.</p>
+  <p>Outbound links may be affiliate links: if you buy through one, this site may earn a commission at no extra cost to you. Status labels describe third-party AI agent access, not a business's own in-app assistant. Each card shows three grades: Capability (what an agent can actually do, pure automation), Depth (depth of products offered, shoppable online), and Overall (60% capability + 40% depth); announced and onboarding entries are graded on available capability only, not on announced targets, and — means ungraded, not failing. See <code>data.js</code> for the full rubric.</p>
   <p>Data file: <code>data.js</code> — every listing on this page renders from that one file. Click any card for a detail page with the full evidence, channels, grade notes, and sources; detail pages have shareable links like <code>#/business/walmart</code>.</p>
 </footer>
 
@@ -155,6 +155,7 @@ function render() {
       <h2>${b.name}</h2>
       <p><span class="grade">${gradeBadge("Capability", b.capability, b)}</span> <span class="grade">${gradeBadge("Depth", b.depth, b)}</span> <span class="grade">${gradeBadge("Overall", b.overall, b)}</span> <span class="badge ${b.status}">${STATUS_LABEL[b.status]}</span>${b.defunct ? ` <span class="badge defunct">Defunct</span>` : ""} <span class="cat">${b.category}</span></p>
       <p class="sales">${b.sales == null ? "Annual sales: not reported" : "Annual sales: $" + b.sales.toFixed(2) + "B"}</p>
+      ${b.channels.length ? `<p class="channels">${b.channels.map(c => `<span>${c}</span>`).join("")}</p>` : ""}
     </article>`).join("") || "<p>No businesses match those filters.</p>";
 }
 
