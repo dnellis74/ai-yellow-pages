@@ -1,0 +1,9 @@
+# Secrets: never commit real keys. See .env.example.
+.env
+.env.*
+!.env.example
+
+# Local run outputs and logs (not part of the site)
+prompts/
+*.log
+node_modules/

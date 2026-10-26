@@ -311,3 +311,198 @@ Shopping in-app; Rufus was retired May 13, 2026).
   survey and could not be re-verified). The systematic error this pass
   corrected was announced/onboarding integrations presented as live
   checkout.
+
+## Access checker scripts
+
+Two scripts re-run the directory's access checks without hand-fetching
+robots.txt, UCP, and llms.txt for every entry. They never edit `data.js`
+and never log in, check out, or submit a form. Requires Node 18+
+(global fetch). Zero dependencies.
+
+### check-access.js (deterministic pass)
+
+Usage:
+
+  node check-access.js [--input <json>] [--out <json>] [--limit N] [--delay ms]
+
+- `--input`: JSON array of `{name, domain}` or `{name, url}`. Default:
+  the `BUSINESSES` array in `./data.js` (domain derived from each
+  entry's `url`).
+- `--out`: report JSON path. Default `./access-report.json` in the
+  working directory. Use `-` to print JSON to stdout (summary goes to
+  stderr).
+- `--limit`: check only the first N entries.
+- `--delay`: milliseconds between requests (default 250). Concurrency
+  is 4 entries at a time; each fetch times out after 10s and retries
+  twice on 429/5xx with exponential backoff. The User-Agent identifies
+  the directory checker.
+
+For each entry it fetches `robots.txt`, `/.well-known/ucp`, and
+`/llms.txt` from the entry's domain and records, per source: URL, HTTP
+status (or error kind: timeout or network; DNS failures surface as
+network), and parsed results (not full bodies, except short excerpts).
+
+- robots.txt: parsed into User-agent groups with Allow/Disallow lists.
+  Named AI agents are reported per agent (GPTBot, ChatGPT-User,
+  OAI-SearchBot, ClaudeBot, Claude-User, Claude-SearchBot, anthropic-ai,
+  PerplexityBot, Perplexity-User, Google-Extended, Applebot,
+  Applebot-Extended, Amazonbot, Meta-ExternalAgent,
+  Meta-ExternalFetcher, DuckAssistBot, CCBot, Bytespider, cohere-ai,
+  YouBot). The generic `User-agent: *` group is recorded separately and
+  NEVER counted as agent policy; `generic_only` is flagged when no named
+  rules exist.
+- UCP: if the body is JSON, capability names are extracted defensively
+  (arrays or nested objects) and checkout/fulfillment/payment markers
+  recorded. Non-JSON or 404 is absent; a 2xx HTML body is an SPA
+  fallback, not a valid file.
+- llms.txt: presence plus AI-permission directives and allowed/disallowed
+  path patterns from a loose markdown-structure parse, with short
+  excerpts. A 2xx HTML body is a fallback, not a valid file.
+
+Deterministic signals (these rules only):
+- Named-agent sitewide Disallow, or named consumer agents all
+  sitewide-disallowed -> blocked signal. CCBot and Bytespider are bulk
+  scrapers, not consumer agents, and are excluded from this signal.
+- UCP with a checkout capability -> checkout signal.
+- llms.txt browse permission, or robots discovery allowed for named
+  agents -> browse signal.
+- No positive signal from successfully fetched sources -> unknown
+  signal (never none).
+- Any fetch failure (403, 429, 5xx, timeout, network) is a gap flag on
+  that source. Gaps NEVER flip a signal to absence.
+
+Suggested status/capability follow the signals (checkout -> A+,
+blocked -> F, browse -> C-, unknown -> "—"). Limited (B) is never
+suggested by this script: partial APIs are not visible in these three
+fetches. Every entry gets `announcement_check_required`, because this
+script does not search the web and does not verify announcements.
+Conflicts are flagged (e.g. named agents allowed but checkout paths
+disallowed; UCP checkout with robots blocking).
+
+Output: a report JSON (one object per entry: name, domain, per-source
+fetch results, parsed rules, signals, suggested status, suggested
+capability, flags, evidence lines) plus a console summary (counts by
+signal and by flag).
+
+### adjudicate.js (LLM pass for flagged entries)
+
+Usage:
+
+  node adjudicate.js --report <report.json> [--evidence <evidence.json>]
+                     [--out <json>] [--dry-run] [--verdicts <json>]
+
+- `--report`: report JSON from check-access.js (required).
+- `--evidence`: optional JSON map of entry name -> search-snippet
+  strings, gathered externally. Lets new entries without a `data.js`
+  record be adjudicated too.
+- `--out`: adjudicated report JSON (default
+  `./adjudicated-report.json`).
+- `--dry-run`: no LLM call. Writes one prompt markdown file per flagged
+  entry into `./prompts/` plus `prompts/SUMMARY.md`, and a skeleton
+  adjudicated report to `--out`. Answer the prompts with any LLM and
+  merge back with `--verdicts`.
+- `--verdicts`: JSON of externally produced verdicts to merge. Accepts
+  a map `{name: verdict}`, an array of `{name, verdict}`, or an array
+  of verdict objects carrying their own `name`. Verdicts go through the
+  same validation as live mode.
+
+An entry is flagged for adjudication when it has any gap flag, any
+conflict flag, the `generic_only` flag, or a suggested status of
+unknown.
+
+Each flagged entry gets an evidence bundle: the script's fetch results,
+signals, and flags; the entry's existing `data.js` evidence (when
+re-checking a known entry); and the optional search snippets. The prompt
+encodes the directory taxonomy (checkout = live consumer-agent
+purchase/booking verified; announced = announced but live unverified;
+onboarding = named onboarding, no live checkout; browse = search/browse
+only; limited = partial/manual/eligibility-restricted; blocked =
+third-party agents blocked; unknown = no policy found; B2B APIs such as
+NDC do NOT count as consumer checkout; announced never counts as live;
+Q&A-only support bots are not agents) and requires a verdict JSON:
+`{status, capability, reasoning (1-2 sentences), confidence
+(high/medium/low), sources_used[], needs_human_review (bool)}`.
+
+Live mode env vars (OpenAI-compatible chat completions):
+- `LLM_API_KEY`: required for live mode. No key -> use `--dry-run`.
+- `LLM_BASE_URL`: default `https://api.openai.com/v1`.
+- `LLM_MODEL`: required. No invented default: set the model you want.
+
+Validation: status and capability must be in the taxonomy, reasoning
+non-empty, confidence in range. Invalid verdicts are rejected, recorded
+in the output, and the entry stays in the review queue. Low-confidence
+verdicts also stay flagged. The output keeps script signal, LLM verdict,
+and final suggestion as separate fields: the final suggestion takes the
+verdict's status/capability only when the verdict is valid, confidence
+is high or medium, and `needs_human_review` is false; otherwise it keeps
+the script's suggestion. A verdict never silently overwrites a script
+signal.
+
+#### Worked backend example: Meta's Model API
+
+`adjudicate.js` speaks OpenAI-compatible chat completions, so any
+OpenAI-compatible backend works through the same three env vars. One
+concrete example is Meta's Model API, in public preview since July 9,
+2026, with US-developer availability. Details below follow third-party
+coverage of Meta's docs, so confirm pricing and availability in Meta's
+docs before relying on them:
+
+  export LLM_API_KEY=<your MODEL_API_KEY from the Meta Model API dashboard>
+  export LLM_BASE_URL=https://api.meta.ai/v1
+  export LLM_MODEL=muse-spark-1.3
+  node adjudicate.js --report access-report.json
+
+Notes:
+- The script reads `LLM_API_KEY`; the dashboard calls the credential a
+  MODEL_API_KEY. Same value, different label. Auth is a Bearer token,
+  as with other OpenAI-compatible backends.
+- Model IDs include `muse-spark-1.3` (also `1.2`, `1.1`) plus
+  contributor variants such as `muse-spark-1.3-contributor`.
+- Pricing quoted for the standard tier: $1.25 per million input tokens,
+  $4.25 per million output tokens, $0.15 per million cached tokens.
+  Contributor tier: $0.10 / $0.20 / $0.002. Contributor prompts and
+  completions may be used for training; standard-tier prompts are not.
+- The older Llama API at `api.llama.com` is reported retired as of
+  July 6, 2026, so it is not documented here as a current backend.
+  Llama weights remain available via third-party OpenAI-compatible
+  hosts (Together, Fireworks, Groq, DeepInfra), which work through the
+  same env vars with their own base URLs.
+
+### Secrets hygiene
+
+- Keys come from the environment only. `adjudicate.js` reads
+  `LLM_API_KEY` (plus `LLM_BASE_URL` and `LLM_MODEL`) from
+  `process.env`. The key is never hardcoded, never given a default,
+  and never read from any file by the scripts.
+- Local runs: copy `.env.example` to `.env` and fill it in (for Meta's
+  Model API, put your MODEL_API_KEY value in `LLM_API_KEY`; see the
+  example above). `.env` is gitignored; `.env.example` is the template
+  and contains no secrets. Load the file into your shell before
+  running, e.g. `set -a; source .env; set +a` — the scripts only read
+  the environment and never open `.env` themselves.
+- The key is never printed to the console and never written to any
+  file the scripts produce: not report JSON, not prompt files, not
+  verdict files. Live mode fails loudly if `LLM_API_KEY` is unset
+  ("LLM_API_KEY is not set; use --dry-run...") instead of proceeding
+  without one.
+- Push rule: the GitHub repo is public, and pushes use an explicit
+  file allowlist (exactly `index.html`, `data.js`, `README.md`,
+  `build_portable.js`, `check-access.js`, `adjudicate.js`,
+  `.gitignore`, `.env.example`). `.env` and run outputs must never be added to
+  a push paths file. `.env` and `prompts/` are gitignored, but report
+  JSONs (`access-report.json`, `adjudicated-report.json`) and verdict
+  files are not — only the allowlist keeps them out of the repo — so
+  never extend it with run outputs.
+
+### Limits
+
+- No web search: announcements are never verified by `check-access.js`.
+  Adjudication needs `--evidence` snippets or the existing `data.js`
+  record to judge them.
+- No live-browser checks: app-only surfaces, JS-rendered pages, and
+  on-site checkout behavior are out of reach for both scripts.
+- No checkout, login, or form-submission attempts, ever.
+- Rate limits and bot walls (403, 429) produce gap flags, not verdicts;
+  re-run later rather than treating a gap as absence.
+- The scripts check access only. They do not grade depth, do not touch
+  sales figures, and do not write `data.js`.
