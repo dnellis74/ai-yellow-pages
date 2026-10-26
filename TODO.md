@@ -5,6 +5,23 @@ Verification history section of README.md. Format follows the common
 markdown-checklist convention: `- [ ]` open, `- [x]` done, with the
 date added and the source or prior note cited per item.
 
+## Expansion list (picks, in order, 2026-10-24)
+
+Said when retail was done at 118 entries; re-supplied 2026-10-26
+because it had never been written down.
+
+- [ ] Travel: airlines, hotels, OTAs, rental cars. Airlines DONE
+  (11 majors merged 2026-10-25); hotels, OTAs, rental cars open.
+  Rationale: agent booking is one of the most active areas, and it
+  pairs with Ocala planning.
+- [ ] Food delivery and restaurants: DoorDash, Uber Eats, Domino's,
+  Starbucks, Chipotle. Agent food ordering is already live in places,
+  and it is daily use.
+- [ ] Tickets and entertainment: Ticketmaster, StubHub, SeatGeek, AMC.
+  Tickets are a natural agent purchase: event, seats, price.
+- [ ] Rides and home services: Uber, Lyft, TaskRabbit, Thumbtack,
+  Rover. Services are the next frontier after goods.
+
 ## Open
 
 - [ ] Verify Instacart's UCP status (2026-10-26). A checkout manifest
