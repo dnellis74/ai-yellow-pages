@@ -91,6 +91,7 @@
 <script src="data.js"></script>
 <script>
 const STATUS_LABEL = { checkout:"Checkout allowed", announced:"Announced, not live", onboarding:"Onboarding, not live", browse:"Browse only", limited:"Limited", blocked:"Blocked", unknown:"No public policy" };
+const PLATFORM_AGENT_LABEL = { full:"Full", partial:"Partial", none:"None", unknown:"Unknown" };
 const CAPABILITY_ORDER = { "A+":0, "B+":1, "B":2, "C-":3, "D":4, "F":5, "—":6 };
 const DEPTH_ORDER = { "A+":0, "A":1, "B":2, "C":3, "D":4, "F":5, "—":6 };
 const OVERALL_ORDER = { "A+":0, "A":1, "A-":2, "B+":3, "B":4, "B-":5, "C+":6, "C":7, "C-":8, "D":9, "F":10, "—":11 };
@@ -175,6 +176,7 @@ function showDetail(b) {
         <p><span class="grade">${gradeBadge("Depth", b.depth, b)}</span> ${b.depthNote}</p>
         <p><span class="grade">${gradeBadge("Overall", b.overall, b)}</span> ${b.overallNote}</p>
       </div>
+      <p class="evidence"><strong>Platform-provided agent: ${PLATFORM_AGENT_LABEL[b.platformAgent] || "Unknown"}</strong> — ${b.platformAgentNote || "Not yet checked for a first-party agent."}${b.platformAgentSource ? ` · <a href="${b.platformAgentSource}">Source</a>` : ""}</p>
       ${b.channels.length ? `<p class="channels">${b.channels.map(c => `<span>${c}</span>`).join("")}</p>` : ""}
       <p class="evidence">${b.evidence}</p>
       <p class="meta">Last verified ${b.verified} · <a href="${b.source}">Source</a></p>

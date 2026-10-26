@@ -24,7 +24,8 @@ Click a card (or focus it and press Enter or Space) to open its detail
 page, which shows everything: name, domain linked to the business
 homepage, status, category, sales plus salesNote, capability plus
 capabilityNote, depth plus depthNote, overall plus overallNote (with the
-provisional flag where set), channels, full evidence text, source linked,
+provisional flag where set), platform-provided agent (value, note, source
+link where present), channels, full evidence text, source linked,
 and verified date, plus a "Back to listings" control.
 
 Deep links: `#/business/<slugified-name>`, e.g. `#/business/walmart`.
@@ -150,6 +151,32 @@ the blend in plain words.
   no capability/depth combination in this data produces a score in those
   bands (e.g. A+ capability with B depth scores 84, an A-, not an A).
 
+## Platform-provided agent
+
+Each entry carries `platformAgent`, `platformAgentNote`, and (where a
+source exists) `platformAgentSource`, shown on detail pages only. This
+field is separate from `status` and `channels`: those describe
+third-party agent access, while `platformAgent` describes the business's
+OWN first-party agent or assistant.
+
+- `full` — the business's own agent completes the transaction (purchase,
+  booking, or payment) on the user's behalf.
+- `partial` — the business's own assistant takes actions or steps toward
+  a transaction (search, compare, plan, reserve, change, refund) but the
+  human completes the transaction on the site or app.
+- `none` — no first-party agent or action-taking assistant found. A
+  Q&A-only support bot counts as none, noted as such.
+- `unknown` — not yet checked.
+
+Hard rule: third-party integrations (ChatGPT plugins, Perplexity, Google
+AI Mode, UCP, NDC/B2B agency APIs) do NOT count toward this field and
+stay in `status`/`channels`. `platformAgent` never changes capability,
+depth, or overall grades.
+
+Current coverage (2026-10-25): the 11 airlines are mapped (partial 4,
+none 5, unknown 2, full 0); the 118 retail entries are unknown pending a
+separate research pass.
+
 ## Hosting
 
 Any static host works: GitHub Pages, Netlify, Cloudflare Pages, or any web
@@ -178,6 +205,37 @@ assistant (e.g. Amazon blocks outside agents while running Alexa for
 Shopping in-app; Rufus was retired May 13, 2026).
 
 ## Verification history
+
+- 2026-10-25 (platform-provided agent retail merge): the 118 retail
+  entries' `platformAgent` values merged from
+  `retail-platform-agents-report-2026-10-25.md` (full 2: Amazon,
+  Casey's; partial 34; none 81; unknown 1: Five Below). Directory-wide
+  distribution now full 2, partial 38, none 86, unknown 3. Caveats
+  carried in notes: Casey's full rests on order completion with
+  in-agent card payment not explicitly documented; Wix partial is
+  merchant-side only; WooCommerce partial is an experimental reference
+  implementation with no orders or payment. No grades, statuses,
+  channels, or evidence changed; only the three `platformAgent*` keys
+  per retail entry. Portable copy rebuilt.
+
+- 2026-10-25 (platform-provided agent field): every entry gained
+  `platformAgent`/`platformAgentNote` (plus `platformAgentSource` where
+  a source exists), shown on detail pages only; cards unchanged. The
+  field covers the business's OWN first-party agent only: full = the own
+  agent completes the transaction, partial = the own assistant takes
+  steps toward a transaction while the human completes it, none = no
+  first-party agent or action-taking assistant found (a Q&A-only support
+  bot counts as none), unknown = not yet checked. Third-party
+  integrations (ChatGPT plugins, Perplexity, Google AI Mode, UCP, NDC/B2B
+  APIs) do NOT count and stay in status/channels; the field never
+  changes capability, depth, or overall grades. The 11 airlines were
+  mapped from `airlines-policy-report-2026-10-25.md` (partial 4:
+  American, Alaska, JetBlue, Frontier; none 5: Delta, United, Southwest,
+  Spirit, Hawaiian; unknown 2: Allegiant, Sun Country; full 0); the 118
+  retail entries are unknown pending a separate research pass. No
+  grades, statuses, channels, or evidence changed. The portable copy was
+  rebuilt with `node build_portable.js`. The live GitHub Pages site was
+  NOT updated in this pass; pushing happens separately.
 
 - 2026-10-25 (major airlines merge): 11 US major airlines added as a new
   Airlines category (American, Delta, United, Southwest, Alaska, JetBlue,

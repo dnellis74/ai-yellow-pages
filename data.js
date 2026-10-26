@@ -38,6 +38,22 @@
 //   overallProvisional: true only for announced/onboarding entries (omit otherwise)
 //   defunct: true only for businesses that have ceased operations (omit otherwise);
 //     renders a Defunct badge on the card and a defunct notice on the detail page.
+//   platformAgent: the business's OWN first-party agent only. Third-party
+//     integrations (ChatGPT plugins, Perplexity, Google AI Mode, UCP,
+//     NDC/B2B agency APIs) do NOT count and stay in status/channels.
+//     "full" | "partial" | "none" | "unknown"
+//     full     = the business's own agent completes the transaction
+//       (purchase, booking, or payment) on the user's behalf.
+//     partial  = the business's own assistant takes actions or steps toward
+//       a transaction (search, compare, plan, reserve, change, refund) but
+//       the human completes the transaction on the site or app.
+//     none     = no first-party agent or action-taking assistant found.
+//       A Q&A-only support bot counts as none, noted as such.
+//     unknown  = not yet checked.
+//   platformAgentNote: one line naming the agent or assistant and what it
+//     does; for unknown entries exactly "Not yet checked for a first-party agent."
+//   platformAgentSource: URL backing the note; omitted when unknown.
+//     platformAgent never changes capability, depth, or overall grades.
 //
 // CAPABILITY GRADE (pure automation; depth never adjusts it):
 //   Verified full agent checkout (status checkout) -> A+.
@@ -132,7 +148,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Specialist depth at $12.60B.",
     "overall": "A+",
-    "overallNote": "Full agent checkout plus strong depth; 60/40 blend lands at A+."
+    "overallNote": "Full agent checkout plus strong depth; 60/40 blend lands at A+.",
+    "platformAgent": "partial",
+    "platformAgentNote": "Cai (Chewy AI) in the mobile app resolves common orders, returns and account-membership issues in chat (about one-third of those cases in beta); shopping/discovery agents were still in development, and no Cai purchase completion was evidenced.",
+    "platformAgentSource": "https://www.customerexperiencedive.com/news/chewy-beta-ai-assistant-solving-common-customer-issues/829948/"
   },
   {
     "name": "Amazon",
@@ -152,7 +171,10 @@ const BUSINESSES = [
     "depth": "A+",
     "depthNote": "General breadth at $293.85B.",
     "overall": "C+",
-    "overallNote": "Blocked for agents plus deepest catalog; 60/40 blend lands at C+."
+    "overallNote": "Blocked for agents plus deepest catalog; 60/40 blend lands at C+.",
+    "platformAgent": "full",
+    "platformAgentNote": "Alexa for Shopping (Rufus merged into Alexa+ in May 2026) automates deal-finding, cart-building and routine purchases, including auto-buy at a set target price and Buy for Me completing purchases on other retailers' sites.",
+    "platformAgentSource": "https://www.retailcustomerexperience.com/news/amazon-melds-rufus-alexa-for-alexa-for-shopping-feature/"
   },
   {
     "name": "eBay",
@@ -172,7 +194,10 @@ const BUSINESSES = [
     "depth": "A+",
     "depthNote": "Marketplace breadth via third-party sellers at $11.10B.",
     "overall": "C+",
-    "overallNote": "Blocked for agents plus deepest catalog; 60/40 blend lands at C+."
+    "overallNote": "Blocked for agents plus deepest catalog; 60/40 blend lands at C+.",
+    "platformAgent": "partial",
+    "platformAgentNote": "First-party conversational AI shopping assistant (select US customers) gives personalized suggestions and advice plus Shop the Look outfit curation; no cart, bid, or checkout action evidenced.",
+    "platformAgentSource": "https://www.pattern.com/blog/marketplace-ai-agents"
   },
   {
     "name": "Kohl's",
@@ -190,7 +215,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Specialist depth at $14.78B.",
     "overall": "C+",
-    "overallNote": "Blocked for agents plus strong depth; 60/40 blend lands at C+."
+    "overallNote": "Blocked for agents plus strong depth; 60/40 blend lands at C+.",
+    "platformAgent": "partial",
+    "platformAgentNote": "Gift Finder / Gemini-powered shopping assistant gives personalized gift ideas, lets shoppers browse in chat and add items to cart, but the human completes checkout; Kohl's also states it does not allow agents to make purchases.",
+    "platformAgentSource": "https://corporate.kohls.com/news/supporting-smarter-shopping-and-faster-decisions-with-ai-at-kohls"
   },
   {
     "name": "Tapestry (Coach, Kate Spade)",
@@ -208,7 +236,10 @@ const BUSINESSES = [
     "depth": "B",
     "depthNote": "Apparel catalog at $4.44B.",
     "overall": "C+",
-    "overallNote": "Browse-only access plus moderate depth; 60/40 blend lands at C+."
+    "overallNote": "Browse-only access plus moderate depth; 60/40 blend lands at C+.",
+    "platformAgent": "none",
+    "platformAgentNote": "Checked Kate Spade (largest/flagship banner evidence): its AI Gift Concierge on katespade.com recommends gifts by occasion/recipient but does not complete purchases; Tapestry says agentic AI narrows choices and stops short of buying.",
+    "platformAgentSource": "https://www.artificialintelligence-news.com/news/amazon-ai-shopping-assistant-kate-spade-retailers/"
   },
   {
     "name": "Walmart",
@@ -230,7 +261,10 @@ const BUSINESSES = [
     "depth": "A+",
     "depthNote": "General breadth at $575.99B.",
     "overall": "A+",
-    "overallNote": "Full agent checkout plus deepest catalog; 60/40 blend lands at A+."
+    "overallNote": "Full agent checkout plus deepest catalog; 60/40 blend lands at A+.",
+    "platformAgent": "partial",
+    "platformAgentNote": "Sparky (Walmart app) builds replenished/proposed carts and suggests missing items, but checkout requires user approval; no buy-for-you payment feature listed.",
+    "platformAgentSource": "https://recipyapp.com/blog/agentic-grocery-shopping-2026"
   },
   {
     "name": "Best Buy",
@@ -251,7 +285,10 @@ const BUSINESSES = [
     "depthNote": "Specialist depth at $38.23B.",
     "overall": "A+",
     "overallNote": "Full agent checkout plus strong depth; 60/40 blend lands at A+ (provisional).",
-    "overallProvisional": true
+    "overallProvisional": true,
+    "platformAgent": "partial",
+    "platformAgentNote": "Ask Blue compares products, checks fit/compatibility and pricing, while Best Buy's genAI virtual assistant also changes order delivery/scheduling and manages software, Geek Squad and membership subscriptions; no Ask Blue checkout evidenced.",
+    "platformAgentSource": "https://www.accenture.com/en/case-studies/ai-data/best-buy-humanizes-customer-experience-genai?country=US"
   },
   {
     "name": "Gap",
@@ -274,7 +311,10 @@ const BUSINESSES = [
     "depthNote": "Specialist depth at $13.43B.",
     "overall": "A+",
     "overallNote": "Full agent checkout plus strong depth; 60/40 blend lands at A+ (provisional).",
-    "overallProvisional": true
+    "overallProvisional": true,
+    "platformAgent": "partial",
+    "platformAgentNote": "Gap Inc. digital assistant (Chat with Us, all brands incl. Gap, Banana Republic, Old Navy, Athleta) helps manage returns, payments and order tracking, plus conversational discovery at Old Navy/Banana Republic; human completes purchase.",
+    "platformAgentSource": "https://www.gapinc.com/en-us/articles/2025/11/gap-inc-is-using-ai-to-reimagine-retail,-with-new-"
   },
   {
     "name": "Sephora",
@@ -295,7 +335,10 @@ const BUSINESSES = [
     "depthNote": "Specialist depth at $8.89B.",
     "overall": "A+",
     "overallNote": "Full agent checkout plus strong depth; 60/40 blend lands at A+ (provisional).",
-    "overallProvisional": true
+    "overallProvisional": true,
+    "platformAgent": "partial",
+    "platformAgentNote": "Reservation Assistant books in-store makeover appointments, and Virtual Artist lets shoppers try shades and add products to the basket; human completes purchase on sephora.com.",
+    "platformAgentSource": "https://www.cosmeticsbusiness.com/news/article_page/Sephora_introduces_chatbot_that_can_reserve_appointments/122631"
   },
   {
     "name": "Target",
@@ -315,7 +358,10 @@ const BUSINESSES = [
     "depth": "A+",
     "depthNote": "General breadth at $102.72B.",
     "overall": "A+",
-    "overallNote": "Full agent checkout plus deepest catalog; 60/40 blend lands at A+."
+    "overallNote": "Full agent checkout plus deepest catalog; 60/40 blend lands at A+.",
+    "platformAgent": "partial",
+    "platformAgentNote": "List Scanner in the Target app scans handwritten/wish lists and adds the items to the cart; the Shopping Assistant itself only answers product questions and recommends.",
+    "platformAgentSource": "https://corporate.target.com/press/release/2025/11/target-launches-new-ai-powered-features-to-make-holiday-shopping-easier,-smarter-and-more-fun"
   },
   {
     "name": "Home Depot",
@@ -333,7 +379,10 @@ const BUSINESSES = [
     "depth": "A+",
     "depthNote": "Home breadth at $141.12B.",
     "overall": "B-",
-    "overallNote": "Browse-only access plus deepest catalog; 60/40 blend lands at B-."
+    "overallNote": "Browse-only access plus deepest catalog; 60/40 blend lands at B-.",
+    "platformAgent": "partial",
+    "platformAgentNote": "Magic Apron gives project guidance, product location/wayfinding, and the pro materials-list agent generates grouped materials lists from a project description; no cart or checkout action evidenced.",
+    "platformAgentSource": "https://corporate.homedepot.com/news/partnerships/home-depot-and-google-cloud-launch-agentic-ai-tools-help-customers-and-associates"
   },
   {
     "name": "Etsy",
@@ -354,7 +403,10 @@ const BUSINESSES = [
     "depth": "A+",
     "depthNote": "Marketplace breadth: tens of millions of listings, despite $2.88B revenue.",
     "overall": "A+",
-    "overallNote": "Full agent checkout plus deepest catalog; 60/40 blend lands at A+."
+    "overallNote": "Full agent checkout plus deepest catalog; 60/40 blend lands at A+.",
+    "platformAgent": "none",
+    "platformAgentNote": "Buyer-facing conversational AI agent is described as gift discovery (shoppers describe what they want in natural language); no first-party cart or checkout action evidenced.",
+    "platformAgentSource": "https://completeaitraining.com/news/etsy-expands-conversational-artificial-intelligence-and-off/"
   },
   {
     "name": "Wayfair",
@@ -374,7 +426,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Specialist depth at $10.97B.",
     "overall": "A+",
-    "overallNote": "Full agent checkout plus strong depth; 60/40 blend lands at A+."
+    "overallNote": "Full agent checkout plus strong depth; 60/40 blend lands at A+.",
+    "platformAgent": "partial",
+    "platformAgentNote": "Muse is a genAI visual discovery tool that surfaces shoppable recommendations and lets shoppers add items to collections to revisit; human buys on Wayfair.",
+    "platformAgentSource": "https://www.digitalcommerce360.com/2025/02/11/wayfair-debuts-muse-ai-powered-search-discovery-tool/"
   },
   {
     "name": "QVC / HSN",
@@ -392,7 +447,10 @@ const BUSINESSES = [
     "depth": "B",
     "depthNote": "General catalog at $7.07B.",
     "overall": "A-",
-    "overallNote": "Full agent checkout plus moderate depth; 60/40 blend lands at A-."
+    "overallNote": "Full agent checkout plus moderate depth; 60/40 blend lands at A-.",
+    "platformAgent": "none",
+    "platformAgentNote": "On-site alby AI shopping agent answers product questions on product detail pages (Q&A only); QVC's purchase channel for agents is third-party agents, which are excluded here.",
+    "platformAgentSource": "https://www.bluecore.com/blog/qvc-increases-conversions/"
   },
   {
     "name": "URBN (Anthropologie, Free People, Urban Outfitters)",
@@ -413,7 +471,10 @@ const BUSINESSES = [
     "depthNote": "Apparel catalog at $4.63B.",
     "overall": "A-",
     "overallNote": "Full agent checkout plus moderate depth; 60/40 blend lands at A- (provisional).",
-    "overallProvisional": true
+    "overallProvisional": true,
+    "platformAgent": "none",
+    "platformAgentNote": "No first-party shopper assistant found; URBN's documented agentic AI is internal weekly merchandising reporting, and its shopper checkout appears via Microsoft Copilot (third-party).",
+    "platformAgentSource": "https://www.customerexperiencedive.com/news/3-retailers-agentic-ai-experiences/810031/"
   },
   {
     "name": "Glossier",
@@ -434,7 +495,10 @@ const BUSINESSES = [
     "depth": "C",
     "depthNote": "Single-brand Beauty catalog with no reported sales figure.",
     "overall": "B+",
-    "overallNote": "Full agent checkout plus narrow depth; 60/40 blend lands at B+."
+    "overallNote": "Full agent checkout plus narrow depth; 60/40 blend lands at B+.",
+    "platformAgent": "none",
+    "platformAgentNote": "No first-party shopping agent found; only a support chatbot reference (sentiment-flagging/escalation) and third-party ChatGPT shoppability.",
+    "platformAgentSource": "https://sitebot.co/blog/gen-z-millennial-shopping-habits-retail-chatbot-design"
   },
   {
     "name": "Vuori",
@@ -454,7 +518,10 @@ const BUSINESSES = [
     "depth": "C",
     "depthNote": "Single-brand apparel catalog; reported nearly $1B in 2025, no exact figure.",
     "overall": "B+",
-    "overallNote": "Full agent checkout plus narrow depth; 60/40 blend lands at B+."
+    "overallNote": "Full agent checkout plus narrow depth; 60/40 blend lands at B+.",
+    "platformAgent": "none",
+    "platformAgentNote": "Kustomer-based AI agents automate ~40% of chat conversations by solving customer queries with human handoff; no specific cart, order, return, or purchase action evidenced, so this counts as support Q&A only.",
+    "platformAgentSource": "https://consumergoods.com/vuori-deploys-ai-agents-optimized-customer-care"
   },
   {
     "name": "Spanx",
@@ -475,7 +542,10 @@ const BUSINESSES = [
     "depth": "C",
     "depthNote": "Single-brand Apparel catalog with no reported sales figure.",
     "overall": "B+",
-    "overallNote": "Full agent checkout plus narrow depth; 60/40 blend lands at B+."
+    "overallNote": "Full agent checkout plus narrow depth; 60/40 blend lands at B+.",
+    "platformAgent": "none",
+    "platformAgentNote": "No first-party shopper assistant found; Spanx's agent presence in sources is third-party ChatGPT/Shopify shoppability and internal marketing/CX analytics agents, neither of which is a shopper-facing first-party agent.",
+    "platformAgentSource": "https://www.marketing-interactive.com/openai-turns-chatgpt-into-a-personal-shopping-assistant"
   },
   {
     "name": "SKIMS",
@@ -495,7 +565,10 @@ const BUSINESSES = [
     "depth": "C",
     "depthNote": "Narrow Apparel catalog at $0.75B.",
     "overall": "B+",
-    "overallNote": "Full agent checkout plus narrow depth; 60/40 blend lands at B+."
+    "overallNote": "Full agent checkout plus narrow depth; 60/40 blend lands at B+.",
+    "platformAgent": "none",
+    "platformAgentNote": "No first-party shopper assistant found; SKIMS's agent presence in sources is third-party ChatGPT/Shopify shoppability only.",
+    "platformAgentSource": "https://www.marketing-interactive.com/openai-turns-chatgpt-into-a-personal-shopping-assistant"
   },
   {
     "name": "Ashley Furniture",
@@ -516,7 +589,10 @@ const BUSINESSES = [
     "depthNote": "Specialist depth at $10.30B.",
     "overall": "A+",
     "overallNote": "Full agent checkout plus strong depth; 60/40 blend lands at A+ (provisional).",
-    "overallProvisional": true
+    "overallProvisional": true,
+    "platformAgent": "none",
+    "platformAgentNote": "Ashley Assist is associate-facing (store/field staff product lookup); the shopper-facing transactional experience is Perplexity + PayPal, which is third-party and excluded.",
+    "platformAgentSource": "https://www.freshworks.com/theworks/customer-experience/ai-holiday-retail-2025/"
   },
   {
     "name": "Revolve",
@@ -537,7 +613,10 @@ const BUSINESSES = [
     "depthNote": "Apparel catalog at $1.23B.",
     "overall": "A-",
     "overallNote": "Full agent checkout plus moderate depth; 60/40 blend lands at A- (provisional).",
-    "overallProvisional": true
+    "overallProvisional": true,
+    "platformAgent": "none",
+    "platformAgentNote": "No Revolve-owned shopping agent found; its AI commerce presence is third-party, via Microsoft Copilot/Curated for You discovery.",
+    "platformAgentSource": "https://www.retailcustomerexperience.com/news/microsoft-revolve-launch-ai-driven-fashion-experience/"
   },
   {
     "name": "Halara",
@@ -558,7 +637,10 @@ const BUSINESSES = [
     "depthNote": "Single-brand Apparel catalog with no reported sales figure.",
     "overall": "B+",
     "overallNote": "Full agent checkout plus narrow depth; 60/40 blend lands at B+ (provisional).",
-    "overallProvisional": true
+    "overallProvisional": true,
+    "platformAgent": "none",
+    "platformAgentNote": "No named first-party action-taking assistant found; only reviewer mentions of a support/returns AI flow, which counts as Q&A/support, not partial.",
+    "platformAgentSource": "https://halara.pissedconsumer.com/review.html"
   },
   {
     "name": "Gymshark",
@@ -579,7 +661,10 @@ const BUSINESSES = [
     "depth": "C",
     "depthNote": "Narrow Apparel catalog at $0.86B.",
     "overall": "B+",
-    "overallNote": "Full agent checkout plus narrow depth; 60/40 blend lands at B+."
+    "overallNote": "Full agent checkout plus narrow depth; 60/40 blend lands at B+.",
+    "platformAgent": "none",
+    "platformAgentNote": "Intercom-powered chatbot handles basic order tracking, returns questions and info collection, then passes to human agents; no cart/purchase action. Planned Google Cloud \"expert assistants\" were described as experiments, not a launched shopper agent.",
+    "platformAgentSource": "https://juphy.com/blog/gymshark-review/"
   },
   {
     "name": "Everlane",
@@ -600,7 +685,10 @@ const BUSINESSES = [
     "depth": "C",
     "depthNote": "Narrow Apparel catalog at $0.20B.",
     "overall": "B+",
-    "overallNote": "Full agent checkout plus narrow depth; 60/40 blend lands at B+."
+    "overallNote": "Full agent checkout plus narrow depth; 60/40 blend lands at B+.",
+    "platformAgent": "none",
+    "platformAgentNote": "Only AI-powered search/discovery (Algolia NeuralSearch) found; no conversational assistant or cart action.",
+    "platformAgentSource": "https://www.algolia.com/blog/ecommerce/how-3-retailers-are-using-ai-powered-search-and-discovery-to-crush-their-numbers"
   },
   {
     "name": "Monos",
@@ -621,7 +709,10 @@ const BUSINESSES = [
     "depth": "C",
     "depthNote": "Narrow Apparel catalog at $0.15B.",
     "overall": "B+",
-    "overallNote": "Full agent checkout plus narrow depth; 60/40 blend lands at B+."
+    "overallNote": "Full agent checkout plus narrow depth; 60/40 blend lands at B+.",
+    "platformAgent": "partial",
+    "platformAgentNote": "Zowie-powered assistant deployed on Monos's site answers product/size questions, compares and recommends, and takes actions including checking order status and initiating returns/warranty requests; human completes any purchase.",
+    "platformAgentSource": "https://getzowie.com/testimonials/monos"
   },
   {
     "name": "Instacart",
@@ -641,7 +732,10 @@ const BUSINESSES = [
     "depth": "B",
     "depthNote": "Groceries catalog at $3.74B.",
     "overall": "A-",
-    "overallNote": "Full agent checkout plus moderate depth; 60/40 blend lands at A-."
+    "overallNote": "Full agent checkout plus moderate depth; 60/40 blend lands at A-.",
+    "platformAgent": "partial",
+    "platformAgentNote": "Clementine, in the Instacart Marketplace app/website, turns prompts, recipes or list photos into a cart ready for checkout based on live store availability; shopper reviews and pays.",
+    "platformAgentSource": "https://progressivegrocer.com/instacarts-clementine-tackles-dinner-decision-fatigue-ai"
   },
   {
     "name": "Shopify merchants",
@@ -664,7 +758,10 @@ const BUSINESSES = [
     "depth": "A+",
     "depthNote": "Platform-wide breadth across eligible US merchants (largest eligible merchant base).",
     "overall": "A+",
-    "overallNote": "Full agent checkout plus deepest catalog; 60/40 blend lands at A+."
+    "overallNote": "Full agent checkout plus deepest catalog; 60/40 blend lands at A+.",
+    "platformAgent": "partial",
+    "platformAgentNote": "Shopify's own shopper-facing Inbox agent answers product/shipping/return questions from catalog and policies, looks up signed-in orders, and can add items to cart; human checks out. Merchant-side Sidekick is separate.",
+    "platformAgentSource": "https://www.eesel.ai/blog/shopify-inbox"
   },
   {
     "name": "Wix stores",
@@ -685,7 +782,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Platform-wide merchant breadth across merchants that enable it.",
     "overall": "B+",
-    "overallNote": "Partial agent interaction plus strong depth; 60/40 blend lands at B+."
+    "overallNote": "Partial agent interaction plus strong depth; 60/40 blend lands at B+.",
+    "platformAgent": "partial",
+    "platformAgentNote": "Merchant-side only: Wix's own Aria executes store tasks (e.g. discounts, sales reports), Juno handles support and Kleo handles marketing; no evidence Wix's own shopper-facing Smart Chat adds to cart or checks out.",
+    "platformAgentSource": "https://www.wix.com/blog/agentic-commerce-on-wix"
   },
   {
     "name": "BigCommerce",
@@ -704,7 +804,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Platform-wide merchant breadth across merchants that enable it.",
     "overall": "B+",
-    "overallNote": "Partial agent interaction plus strong depth; 60/40 blend lands at B+."
+    "overallNote": "Partial agent interaction plus strong depth; 60/40 blend lands at B+.",
+    "platformAgent": "none",
+    "platformAgentNote": "No BigCommerce-owned shopper agent found; its Oct 2026 WebMCP/Cloudflare move explicitly enables shoppers' own browser agents to search and fill a cart, with checkout remaining on the storefront.",
+    "platformAgentSource": "https://www.commerce.com/press/commerce-and-cloudflare-bring-ai-shopping-assistants-to-bigcommerce-merchants-online-stores-with-webmcp/?utm_medium=press-release&utm_source=COMM&utm_campaign=oth_gl_all_acq-cus_FY26&utm_id=701Pi00008hGPKmIAO"
   },
   {
     "name": "Squarespace",
@@ -724,7 +827,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Platform-wide merchant breadth across merchants that enable it.",
     "overall": "B+",
-    "overallNote": "Partial agent interaction plus strong depth; 60/40 blend lands at B+."
+    "overallNote": "Partial agent interaction plus strong depth; 60/40 blend lands at B+.",
+    "platformAgent": "none",
+    "platformAgentNote": "Blueprint AI is a merchant-side site builder (layouts, copy, images), not a shopper or transaction agent; shopper chatbots found for Squarespace sites are third-party embeds.",
+    "platformAgentSource": "https://www.founderpass.com/reviews/squarespace-ai-review"
   },
   {
     "name": "WooCommerce",
@@ -743,7 +849,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Platform-wide merchant breadth across merchants that enable it.",
     "overall": "B+",
-    "overallNote": "Partial agent interaction plus strong depth; 60/40 blend lands at B+."
+    "overallNote": "Partial agent interaction plus strong depth; 60/40 blend lands at B+.",
+    "platformAgent": "partial",
+    "platformAgentNote": "WooCommerce's own experimental Claude commerce agent (reference implementation, not a supported extension) lets shoppers search, compare, plan and build a cart, then hands them to the store's normal checkout; it explicitly does not place orders or take payment.",
+    "platformAgentSource": "https://developer.woocommerce.com/2026/09/16/wc-claude-commerce-agent/"
   },
   {
     "name": "Costco",
@@ -761,7 +870,10 @@ const BUSINESSES = [
     "depth": "A+",
     "depthNote": "General breadth at $198.73B.",
     "overall": "B-",
-    "overallNote": "Browse-only access plus deepest catalog; 60/40 blend lands at B-."
+    "overallNote": "Browse-only access plus deepest catalog; 60/40 blend lands at B-.",
+    "platformAgent": "none",
+    "platformAgentNote": "No first-party shopping agent found; only third-party tools (e.g. SavAI, EurKart) and generic chatbot claims with no named Costco agent.",
+    "platformAgentSource": "https://www.costco.com/"
   },
   {
     "name": "Kroger",
@@ -782,7 +894,10 @@ const BUSINESSES = [
     "depth": "A+",
     "depthNote": "Groceries breadth at $154.74B.",
     "overall": "A-",
-    "overallNote": "Cart-building only plus deepest catalog; 60/40 blend lands at A-."
+    "overallNote": "Cart-building only plus deepest catalog; 60/40 blend lands at A-.",
+    "platformAgent": "partial",
+    "platformAgentNote": "Kroger's own AI Shopping Assistant, across Kroger sites/apps, plans meals and builds carts from budget/dietary needs, list photos or recipe URLs; shopper checks out.",
+    "platformAgentSource": "http://theshelbyreport.com/2026/07/29/kroger-launches-ai-shopping-assistant-across-all-banners/"
   },
   {
     "name": "CVS",
@@ -802,7 +917,10 @@ const BUSINESSES = [
     "depth": "A+",
     "depthNote": "Pharmacy breadth at $139.37B.",
     "overall": "A-",
-    "overallNote": "Partial agent interaction plus deepest catalog; 60/40 blend lands at A-."
+    "overallNote": "Partial agent interaction plus deepest catalog; 60/40 blend lands at A-.",
+    "platformAgent": "none",
+    "platformAgentNote": "CVS Health app's AI chatbot/AI search locates products, services and information, and a planned conversational chat checks refills/order status; Q&A and lookup only, no cart or purchase action found.",
+    "platformAgentSource": "https://www.retail-systems.com/rs/Cvc_health_enhances_customer_experience_with_new_ai_powered_app.php"
   },
   {
     "name": "Walgreens",
@@ -820,7 +938,10 @@ const BUSINESSES = [
     "depth": "A+",
     "depthNote": "Pharmacy breadth at $112.05B.",
     "overall": "—",
-    "overallNote": "Ungraded: capability is ungraded, so no overall rating."
+    "overallNote": "Ungraded: capability is ungraded, so no overall rating.",
+    "platformAgent": "none",
+    "platformAgentNote": "No shopper-facing first-party agent found; Theatro voice assistant is associate-facing in stores, and shopper AI found is Algolia search/personalization only.",
+    "platformAgentSource": "https://www.theatro.com/?p=7574"
   },
   {
     "name": "Lowe's",
@@ -842,7 +963,10 @@ const BUSINESSES = [
     "depthNote": "Home breadth at $83.96B.",
     "overall": "B-",
     "overallNote": "Browse-only access plus deepest catalog; 60/40 blend lands at B- (provisional).",
-    "overallProvisional": true
+    "overallProvisional": true,
+    "platformAgent": "partial",
+    "platformAgentNote": "Mylow, on Lowes.com/app, gives project guidance and recommendations and, via its purchase agent (e.g. \"Mulch Me Now\"), can add products to the cart and direct the shopper to checkout; human completes checkout.",
+    "platformAgentSource": "https://www.modernretail.co/technology/lowes-aims-to-make-mulch-buying-easier-with-ai/"
   },
   {
     "name": "Albertsons",
@@ -862,7 +986,10 @@ const BUSINESSES = [
     "depth": "A+",
     "depthNote": "Groceries breadth at $81.77B.",
     "overall": "A-",
-    "overallNote": "Cart-building only plus deepest catalog; 60/40 blend lands at A-."
+    "overallNote": "Cart-building only plus deepest catalog; 60/40 blend lands at A-.",
+    "platformAgent": "partial",
+    "platformAgentNote": "Albertsons' agentic assistant (Ask AI, built with Google Cloud Conversational Commerce) generates meal plans and shopping lists, reorders frequent purchases, imports recipes from images and curates products; baskets are built for the shopper to check out.",
+    "platformAgentSource": "https://www.grocerydive.com/news/albertsons-agentic-ai-shopping-assistant/807168/"
   },
   {
     "name": "Apple",
@@ -883,7 +1010,10 @@ const BUSINESSES = [
     "depthNote": "Electronics breadth at $75.90B.",
     "overall": "B-",
     "overallNote": "Browse-only access plus deepest catalog; 60/40 blend lands at B- (provisional).",
-    "overallProvisional": true
+    "overallProvisional": true,
+    "platformAgent": "none",
+    "platformAgentNote": "Apple Store app's Virtual Shopping Assistant is in limited Early Preview and answers product, order, trade-in, carrier-offer and payment questions and compares lineups; no documented add-to-cart, reserve or purchase action.",
+    "platformAgentSource": "https://9to5mac.com/2026/08/24/apple-store-app-is-testing-an-ai-shopping-assistant/"
   },
   {
     "name": "Publix",
@@ -903,7 +1033,10 @@ const BUSINESSES = [
     "depth": "A+",
     "depthNote": "Groceries breadth at $62.75B.",
     "overall": "A-",
-    "overallNote": "Cart-building only plus deepest catalog; 60/40 blend lands at A-."
+    "overallNote": "Cart-building only plus deepest catalog; 60/40 blend lands at A-.",
+    "platformAgent": "none",
+    "platformAgentNote": "No first-party shopping agent found in searches; only third-party shoppable/recipe tools and agency AI work.",
+    "platformAgentSource": "https://www.publix.com/"
   },
   {
     "name": "Stop & Shop",
@@ -923,7 +1056,10 @@ const BUSINESSES = [
     "depth": "A+",
     "depthNote": "Groceries breadth at $59.83B.",
     "overall": "A-",
-    "overallNote": "Cart-building only plus deepest catalog; 60/40 blend lands at A-."
+    "overallNote": "Cart-building only plus deepest catalog; 60/40 blend lands at A-.",
+    "platformAgent": "none",
+    "platformAgentNote": "No Stop & Shop-owned assistant found; Ahold Delhaize USA's Click2Cart (SmartCommerce) lets shoppers add items from ads/social posts to a cart, but it is a third-party shoppable-content tool, not a conversational agent.",
+    "platformAgentSource": "https://progressivegrocer.com/ahold-delhaize-usa-rolls-out-smartcommerces-click2cart-capability"
   },
   {
     "name": "Aldi",
@@ -944,7 +1080,10 @@ const BUSINESSES = [
     "depthNote": "Groceries breadth at $58.36B.",
     "overall": "A-",
     "overallNote": "Cart-building only plus deepest catalog; 60/40 blend lands at A- (provisional).",
-    "overallProvisional": true
+    "overallProvisional": true,
+    "platformAgent": "none",
+    "platformAgentNote": "No first-party customer agent found; Aldi's only cited AI cart surface is Instacart's white-label Cart Assistant, listed as \"to follow,\" not live Aldi-owned agent.",
+    "platformAgentSource": "https://chainstoreage.com/instacart-and-shipt-launch-ai-shopping-assistants"
   },
   {
     "name": "TJ Maxx",
@@ -962,7 +1101,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Specialist depth at $46.30B.",
     "overall": "—",
-    "overallNote": "Ungraded: capability is ungraded, so no overall rating."
+    "overallNote": "Ungraded: capability is ungraded, so no overall rating.",
+    "platformAgent": "none",
+    "platformAgentNote": "No first-party customer agent or action-taking assistant found; only speculative third-party proposals about possible chatbots.",
+    "platformAgentSource": "https://www.tjmaxx.com/"
   },
   {
     "name": "H-E-B",
@@ -980,7 +1122,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Generalist depth at $44.16B.",
     "overall": "—",
-    "overallNote": "Ungraded: capability is ungraded, so no overall rating."
+    "overallNote": "Ungraded: capability is ungraded, so no overall rating.",
+    "platformAgent": "none",
+    "platformAgentNote": "No first-party AI shopping/support assistant found; My H-E-B app listing describes pickup/delivery, lists, coupons, and shoppable recipes with no assistant.",
+    "platformAgentSource": "https://play.google.com/store/apps/details/My+H-E-B?id=com.heb.myheb&hl=en_US"
   },
   {
     "name": "Dollar General",
@@ -998,7 +1143,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Generalist depth at $43.13B.",
     "overall": "—",
-    "overallNote": "Ungraded: capability is ungraded, so no overall rating."
+    "overallNote": "Ungraded: capability is ungraded, so no overall rating.",
+    "platformAgent": "none",
+    "platformAgentNote": "Only enterprise/back-end AI found: RELEX forecasting, replenishment, and allocation, plus internal \"agentic operating systems\" for workflows, not a customer agent.",
+    "platformAgentSource": "https://www.retaildive.com/news/dollar-general-ai-distribution-centers-stores/829201/"
   },
   {
     "name": "Ace Hardware",
@@ -1018,7 +1166,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Specialist depth at $27.55B.",
     "overall": "A+",
-    "overallNote": "Full agent checkout plus strong depth; 60/40 blend lands at A+."
+    "overallNote": "Full agent checkout plus strong depth; 60/40 blend lands at A+.",
+    "platformAgent": "none",
+    "platformAgentNote": "Hey ARMA is associate-only: an AI assistant on associates' handhelds giving product knowledge, project advice, comparisons, and recommendations in-store; not a customer-facing agent and it does not transact.",
+    "platformAgentSource": "https://newsroom.acehardware.com/2026-04-28-Ace-Hardware-Introduces-AI-Assistant-to-Strengthen-In-Store-Service"
   },
   {
     "name": "7-Eleven",
@@ -1036,7 +1187,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Generalist depth at $25.30B.",
     "overall": "—",
-    "overallNote": "Ungraded: capability is ungraded, so no overall rating."
+    "overallNote": "Ungraded: capability is ungraded, so no overall rating.",
+    "platformAgent": "none",
+    "platformAgentNote": "Sevvy is described only as an \"AI-powered assistant within the app\" adding a \"more intuitive and personalized layer\"; no documented cart, order, reserve, or payment action. Rita is a hiring assistant, not shopping.",
+    "platformAgentSource": "https://csnews.com/7-eleven-champions-tech-enabled-convenience"
   },
   {
     "name": "Meijer",
@@ -1054,7 +1208,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Generalist depth at $22.82B.",
     "overall": "—",
-    "overallNote": "Ungraded: capability is ungraded, so no overall rating."
+    "overallNote": "Ungraded: capability is ungraded, so no overall rating.",
+    "platformAgent": "none",
+    "platformAgentNote": "No live first-party customer assistant found; app listing describes delivery/pickup, lists, Shop & Scan, and mPerks, with no assistant. A 2018 student capstone \"Thrifty\" chatbot is not a launched product.",
+    "platformAgentSource": "https://play.google.com/store/apps/details?id=com.meijer.mobile.meijer&hl=en&gl=US"
   },
   {
     "name": "Ross",
@@ -1072,7 +1229,10 @@ const BUSINESSES = [
     "depth": "F",
     "depthNote": "No online catalog to shop: in-store only, no e-commerce at all.",
     "overall": "—",
-    "overallNote": "Ungraded: capability is ungraded, so no overall rating."
+    "overallNote": "Ungraded: capability is ungraded, so no overall rating.",
+    "platformAgent": "none",
+    "platformAgentNote": "No first-party customer agent or action-taking assistant found; search results were unrelated \"Ross AI\" software marketing and GEO reports.",
+    "platformAgentSource": "https://www.rossstores.com/"
   },
   {
     "name": "AT&T",
@@ -1094,7 +1254,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Specialist depth at $22.10B.",
     "overall": "B-",
-    "overallNote": "Browse-only access plus strong depth; 60/40 blend lands at B-."
+    "overallNote": "Browse-only access plus strong depth; 60/40 blend lands at B-.",
+    "platformAgent": "none",
+    "platformAgentNote": "New AT&T app has a GenAI assistant for shopping and support, but sources describe it only as faster answers and expert advice; shopping/purchase flow is in the app generally, with no evidence the assistant itself executes a purchase, plan change, or payment.",
+    "platformAgentSource": "https://about.att.com/ecms/dam/snrdocs/pdf/2026/new-att-app.pdf?action=download"
   },
   {
     "name": "Verizon",
@@ -1114,7 +1277,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Specialist depth at $21.78B.",
     "overall": "B-",
-    "overallNote": "Browse-only access plus strong depth; 60/40 blend lands at B-."
+    "overallNote": "Browse-only access plus strong depth; 60/40 blend lands at B-.",
+    "platformAgent": "partial",
+    "platformAgentNote": "Verizon Assistant in the My Verizon app (Gemini-powered) is described as helping customers manage upgrades, add new lines, ask billing questions, and take advantage of savings, with an agentic framework that can auto-resolve cases and issue credit; a separate beta ShopBot guides Total Wireless shoppers toward purchase.",
+    "platformAgentSource": "https://itbusinessnet.com/2025/06/verizon-americas-most-reliable-5g-network-launches-industry-leading-ai-powered-customer-experience-innovations/"
   },
   {
     "name": "Macy's",
@@ -1136,7 +1302,10 @@ const BUSINESSES = [
     "depthNote": "Generalist depth at $21.68B.",
     "overall": "B-",
     "overallNote": "Browse-only access plus strong depth; 60/40 blend lands at B- (provisional).",
-    "overallProvisional": true
+    "overallProvisional": true,
+    "platformAgent": "partial",
+    "platformAgentNote": "Ask Macy's (launched March 2026, Gemini-based) does conversational product discovery, personalized recommendations, and virtual try-on; no evidence it adds to bag, reserves, or checks out. Conversational search, compare, and plan count as partial under the field definition.",
+    "platformAgentSource": "https://www.retaildive.com/news/ask-macys-AI-conversational-shopping-assistant/815928/"
   },
   {
     "name": "BJ's Wholesale Club",
@@ -1154,7 +1323,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Generalist depth at $21.05B.",
     "overall": "—",
-    "overallNote": "Ungraded: capability is ungraded, so no overall rating."
+    "overallNote": "Ungraded: capability is ungraded, so no overall rating.",
+    "platformAgent": "none",
+    "platformAgentNote": "Bev, BJ's AI shopping assistant, is described as handling member conversations to locate products, check club hours, and access membership information; that is Q&A/location, with no cart, reserve, or checkout action documented.",
+    "platformAgentSource": "https://www.zacks.com/stock/news/3011683/how-wmt-tgt-bj-are-betting-big-on-ai-powered-shopping"
   },
   {
     "name": "Dick's Sporting Goods",
@@ -1172,7 +1344,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Specialist depth at $20.20B.",
     "overall": "—",
-    "overallNote": "Ungraded: capability is ungraded, so no overall rating."
+    "overallNote": "Ungraded: capability is ungraded, so no overall rating.",
+    "platformAgent": "partial",
+    "platformAgentNote": "Coach by Dick's (app, launched June 2026, Adobe Brand Concierge) gives tailored product recommendations, training tips, and decision guidance; no cart, reserve, or purchase action documented. Conversational search, compare, and plan count as partial under the field definition.",
+    "platformAgentSource": "https://www.retaildive.com/news/dicks-sporting-goods-coach-ai-shopping-adviser/821356/"
   },
   {
     "name": "ShopRite",
@@ -1190,7 +1365,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Generalist depth at $19.57B.",
     "overall": "—",
-    "overallNote": "Ungraded: capability is ungraded, so no overall rating."
+    "overallNote": "Ungraded: capability is ungraded, so no overall rating.",
+    "platformAgent": "none",
+    "platformAgentNote": "No first-party customer agent found for US ShopRite (Wakefern/shoprite.com); its Recipe Shop is third-party Locai CookIt meal planning, which is excluded by the hard rule.",
+    "platformAgentSource": "https://www.supermarketnews.com/grocery-trends-data/wakefern-s-shoprite-tests-online-meal-planning-service"
   },
   {
     "name": "Dollar Tree",
@@ -1208,7 +1386,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Generalist depth at $18.93B.",
     "overall": "—",
-    "overallNote": "Ungraded: capability is ungraded, so no overall rating."
+    "overallNote": "Ungraded: capability is ungraded, so no overall rating.",
+    "platformAgent": "none",
+    "platformAgentNote": "Only back-end/enterprise AI found: modernization, assortment planning, inventory visibility, and an SVP of AI optimization; no customer-facing agent.",
+    "platformAgentSource": "https://www.ciodive.com/news/retailers-beverage-banks-AI-strategy-agents-generative/804949/"
   },
   {
     "name": "O'Reilly Auto Parts",
@@ -1226,7 +1407,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Specialist depth at $17.07B.",
     "overall": "—",
-    "overallNote": "Ungraded: capability is ungraded, so no overall rating."
+    "overallNote": "Ungraded: capability is ungraded, so no overall rating.",
+    "platformAgent": "none",
+    "platformAgentNote": "No first-party customer agent or action-taking assistant found; results were GEO/visibility reports and generic virtual-assistant claims, none a named live O'Reilly agent.",
+    "platformAgentSource": "https://www.oreillyauto.com/"
   },
   {
     "name": "AutoZone",
@@ -1246,7 +1430,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Specialist depth at $15.94B.",
     "overall": "B-",
-    "overallNote": "Browse-only access plus strong depth; 60/40 blend lands at B-."
+    "overallNote": "Browse-only access plus strong depth; 60/40 blend lands at B-.",
+    "platformAgent": "none",
+    "platformAgentNote": "No live customer agent found; Google partnership coverage describes only a cloud migration and \"early stages\" of internal Gemini Enterprise use to automate high-volume tasks and improve productivity. A portfolio chatbot project for rewards inquiries is not verified as a live AutoZone product.",
+    "platformAgentSource": "https://ChainStoreage.com/autozone-home-depot-macys-ulta-enter-google-agentic-ai-partnerships"
   },
   {
     "name": "Tractor Supply",
@@ -1264,7 +1451,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Specialist depth at $15.52B.",
     "overall": "—",
-    "overallNote": "Ungraded: capability is ungraded, so no overall rating."
+    "overallNote": "Ungraded: capability is ungraded, so no overall rating.",
+    "platformAgent": "none",
+    "platformAgentNote": "Customer-facing website assistant is described only as exploratory commerce surfacing products and confirming availability, with transaction-closing as future (\"eventually\"); Hey GURA is an associate headset/knowledge tool for recommendations and inventory, not a customer transacting agent.",
+    "platformAgentSource": "https://www.retaildive.com/news/tractor-supply-ai-customer-service-nrf/705237/"
   },
   {
     "name": "Nordstrom",
@@ -1284,7 +1474,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Specialist depth at $14.90B.",
     "overall": "B-",
-    "overallNote": "Browse-only access plus strong depth; 60/40 blend lands at B-."
+    "overallNote": "Browse-only access plus strong depth; 60/40 blend lands at B-.",
+    "platformAgent": "none",
+    "platformAgentNote": "No live first-party agent found; Style Swipes is a recommendation feature (approve/reject outfit suggestions), and styling remains human stylists via Request a Look/appointments; a 2016 holiday Messenger chatbot was temporary.",
+    "platformAgentSource": "https://www.customerexperiencedive.com/news/nordstrom-generative-ai-holiday-app-refresh/733071/"
   },
   {
     "name": "Hy-Vee",
@@ -1302,7 +1495,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Generalist depth at $14.19B.",
     "overall": "—",
-    "overallNote": "Ungraded: capability is ungraded, so no overall rating."
+    "overallNote": "Ungraded: capability is ungraded, so no overall rating.",
+    "platformAgent": "none",
+    "platformAgentNote": "Only back-end/internal AI found: RELEX forecasting/replenishment/fresh ordering and Workday AI scheduling for managers; no customer-facing shopping assistant.",
+    "platformAgentSource": "https://perishablenews.com/retailfoodservice/hy-vee-chooses-relex-to-further-strengthen-product-availability-and-freshness/"
   },
   {
     "name": "Menards",
@@ -1320,7 +1516,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Specialist depth at $14.10B.",
     "overall": "—",
-    "overallNote": "Ungraded: capability is ungraded, so no overall rating."
+    "overallNote": "Ungraded: capability is ungraded, so no overall rating.",
+    "platformAgent": "none",
+    "platformAgentNote": "No first-party customer agent found; support is a help center, email form, and live chat with representatives, not an action-taking AI assistant.",
+    "platformAgentSource": "https://www.menards.com/"
   },
   {
     "name": "Wegmans",
@@ -1340,7 +1539,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Generalist depth at $13.36B.",
     "overall": "A-",
-    "overallNote": "Cart-building only plus strong depth; 60/40 blend lands at A-."
+    "overallNote": "Cart-building only plus strong depth; 60/40 blend lands at A-.",
+    "platformAgent": "partial",
+    "platformAgentNote": "Wegmans' AI shopping assistant (Cooklist platform embedded on Wegmans' site) takes natural-language requests, checks inventory, and builds checkout-ready, personalized baskets for human review and checkout.",
+    "platformAgentSource": "https://progressivegrocer.com/cooklist-brings-agentic-ai-based-shopping-kroger-wegmans"
   },
   {
     "name": "Sherwin-Williams",
@@ -1358,7 +1560,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Specialist depth at $12.60B.",
     "overall": "—",
-    "overallNote": "Ungraded: capability is ungraded, so no overall rating."
+    "overallNote": "Ungraded: capability is ungraded, so no overall rating.",
+    "platformAgent": "none",
+    "platformAgentNote": "Color Expert is an AI color recommender and visualizer only; no evidence it adds paint to a cart, books, or completes a transaction.",
+    "platformAgentSource": "https://www.sherwin-williams.com/en-us/color/color-tools?msclkid=e02aba03cc001cc86555dca1e6f9107a"
   },
   {
     "name": "Ulta Beauty",
@@ -1380,7 +1585,10 @@ const BUSINESSES = [
     "depthNote": "Specialist depth at $12.39B.",
     "overall": "A+",
     "overallNote": "Full agent checkout plus strong depth; 60/40 blend lands at A+ (provisional).",
-    "overallProvisional": true
+    "overallProvisional": true,
+    "platformAgent": "partial",
+    "platformAgentNote": "Ulta AI, a proprietary assistant on Ulta.com (powered by Gemini Enterprise), helps guests discover, compare, and shop beauty; human still completes checkout on Ulta's site/app.",
+    "platformAgentSource": "https://www.retailtechnology.co.uk/news/8671/ulta-beauty-get-ai-makeover/news/8653/puma-to-launch-ai-concierge/"
   },
   {
     "name": "Health Mart",
@@ -1398,7 +1606,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Network-wide Pharmacy scale at $12.25B (network figure, not one storefront).",
     "overall": "C+",
-    "overallNote": "No usable agent channel plus strong depth; 60/40 blend lands at C+."
+    "overallNote": "No usable agent channel plus strong depth; 60/40 blend lands at C+.",
+    "platformAgent": "none",
+    "platformAgentNote": "No first-party customer agent found; the My GNP app offers manual refill requests, store lookup, and med tracking, not an AI agent.",
+    "platformAgentSource": "https://www.healthmart.com/"
   },
   {
     "name": "Family Dollar",
@@ -1416,7 +1627,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Generalist depth at $11.91B.",
     "overall": "—",
-    "overallNote": "Ungraded: capability is ungraded, so no overall rating."
+    "overallNote": "Ungraded: capability is ungraded, so no overall rating.",
+    "platformAgent": "none",
+    "platformAgentNote": "Its AI is back-office only: dunnhumby Assortment/Shop for category management and merchandising, not a customer-facing assistant.",
+    "platformAgentSource": "https://www.dunnhumby.com/news/family-dollar-selects-dunnhumby-ai-platform-to-power-customer-driven-category-management-and-merchandising-nationwide/"
   },
   {
     "name": "Circle K",
@@ -1434,7 +1648,10 @@ const BUSINESSES = [
     "depth": "D",
     "depthNote": "US site is mainly a store locator with no national online merchandise checkout, despite $11.58B network sales.",
     "overall": "—",
-    "overallNote": "Ungraded: capability is ungraded, so no overall rating."
+    "overallNote": "Ungraded: capability is ungraded, so no overall rating.",
+    "platformAgent": "none",
+    "platformAgentNote": "Circle K's own AI chatbot policy describes an AI-powered chatbot that generates responses to queries across its websites/apps; no evidence it orders, books, or pays.",
+    "platformAgentSource": "https://www.circlek.com/terms-of-use-privacy-policy-for-circle-k-chatbot"
   },
   {
     "name": "Burlington",
@@ -1452,7 +1669,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Specialist depth at $11.48B.",
     "overall": "C+",
-    "overallNote": "Blocked for agents plus strong depth; 60/40 blend lands at C+."
+    "overallNote": "Blocked for agents plus strong depth; 60/40 blend lands at C+.",
+    "platformAgent": "none",
+    "platformAgentNote": "No customer shopping agent found; the AI assistant \"Allison\" (Paradox) is for hiring/interview scheduling, not shoppers.",
+    "platformAgentSource": "https://www.paradox.ai/case-studies/burlington"
   },
   {
     "name": "WinCo Foods",
@@ -1470,7 +1690,10 @@ const BUSINESSES = [
     "depth": "—",
     "depthNote": "Sources conflict on whether online shopping exists, so depth cannot be assessed from available evidence.",
     "overall": "—",
-    "overallNote": "Ungraded: capability is ungraded, so no overall rating."
+    "overallNote": "Ungraded: capability is ungraded, so no overall rating.",
+    "platformAgent": "none",
+    "platformAgentNote": "Its AI is back-office only: Afresh/Invafresh fresh replenishment and production planning, not a customer-facing assistant.",
+    "platformAgentSource": "https://www.grocerydive.com/news/winco-to-add-produce-replenishment-software-from-afresh-across-all-stores/591618/"
   },
   {
     "name": "Giant Eagle",
@@ -1490,7 +1713,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Generalist depth at $10.63B.",
     "overall": "A-",
-    "overallNote": "Cart-building only plus strong depth; 60/40 blend lands at A-."
+    "overallNote": "Cart-building only plus strong depth; 60/40 blend lands at A-.",
+    "platformAgent": "partial",
+    "platformAgentNote": "Giant Eagle's in-app AI recipe generator takes prompts (e.g., a spicy, low-calorie shrimp meal) and adds the ingredients to the customer's digital cart; human completes checkout.",
+    "platformAgentSource": "https://www.modernretail.co/technology/how-kroger-giant-eagle-and-doordash-are-building-their-agentic-ai-assistants/"
   },
   {
     "name": "Discount Tire",
@@ -1508,7 +1734,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Specialist depth at $10.41B.",
     "overall": "—",
-    "overallNote": "Ungraded: capability is ungraded, so no overall rating."
+    "overallNote": "Ungraded: capability is ungraded, so no overall rating.",
+    "platformAgent": "none",
+    "platformAgentNote": "No first-party AI agent found; online appointment scheduling is a manual form, and Tireweb AI is a third-party vendor for independent shops, not Discount Tire's agent.",
+    "platformAgentSource": "https://www.discounttire.com/"
   },
   {
     "name": "Good Neighbor Pharmacy",
@@ -1526,7 +1755,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Network-wide Pharmacy scale at $9.74B (network figure, not one storefront).",
     "overall": "C+",
-    "overallNote": "No usable agent channel plus strong depth; 60/40 blend lands at C+."
+    "overallNote": "No usable agent channel plus strong depth; 60/40 blend lands at C+.",
+    "platformAgent": "none",
+    "platformAgentNote": "No first-party customer agent found; its digital tools are member-pharmacy business/analytics and care-gap tools, not a shopper agent.",
+    "platformAgentSource": "https://chaindrugreview.com/good-neighbor-pharmacy-enhances-care-digitally/"
   },
   {
     "name": "Saks Fifth Avenue",
@@ -1544,7 +1776,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Specialist depth at $8.97B.",
     "overall": "—",
-    "overallNote": "Ungraded: capability is ungraded, so no overall rating."
+    "overallNote": "Ungraded: capability is ungraded, so no overall rating.",
+    "platformAgent": "none",
+    "platformAgentNote": "NLX/AWS conversational service handles order/return status questions, and the Salesforce Agentforce order-change agent was announced as \"soon,\" not verified live; no live action-taking shopping agent found.",
+    "platformAgentSource": "https://www.retailitinsights.com/doc/nlx-amazon-web-services-deliver-generative-ai-powered-conversational-experiences-saks-fifth-avenue-0001"
   },
   {
     "name": "Sprouts Farmers Market",
@@ -1565,7 +1800,10 @@ const BUSINESSES = [
     "depthNote": "Groceries catalog at $8.81B.",
     "overall": "B+",
     "overallNote": "Cart-building only plus moderate depth; 60/40 blend lands at B+ (provisional).",
-    "overallProvisional": true
+    "overallProvisional": true,
+    "platformAgent": "partial",
+    "platformAgentNote": "Instacart's Cart Assistant, embedded on Sprouts' website/app, builds baskets via conversational meal planning, budgeting, and recommendations; human completes checkout.",
+    "platformAgentSource": "https://www.grocerydive.com/news/kroger-sprouts-instacart-artificial-intelligence-grocery/804637/"
   },
   {
     "name": "Harbor Freight",
@@ -1583,7 +1821,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Specialist depth at $8.20B.",
     "overall": "B-",
-    "overallNote": "Browse-only access plus strong depth; 60/40 blend lands at B-."
+    "overallNote": "Browse-only access plus strong depth; 60/40 blend lands at B-.",
+    "platformAgent": "none",
+    "platformAgentNote": "No first-party customer agent found; Jasper material found is a vendor marketing/copy tool, not a Harbor Freight shopper agent.",
+    "platformAgentSource": "https://www.harborfreight.com/"
   },
   {
     "name": "Tops",
@@ -1601,7 +1842,10 @@ const BUSINESSES = [
     "depth": "B",
     "depthNote": "Groceries catalog at $7.96B.",
     "overall": "—",
-    "overallNote": "Ungraded: capability is ungraded, so no overall rating."
+    "overallNote": "Ungraded: capability is ungraded, so no overall rating.",
+    "platformAgent": "none",
+    "platformAgentNote": "No first-party customer agent found for US Tops Friendly Markets; its cited AI is the Tally shelf-scanning robot for inventory/pricing, not a shopper agent.",
+    "platformAgentSource": "https://webseal.topsmarkets.com/jwww2/www2/PressReleases/company_press_article.cfm?press_id=1845"
   },
   {
     "name": "PetSmart",
@@ -1622,7 +1866,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Specialist depth at $7.81B.",
     "overall": "B-",
-    "overallNote": "Browse-only access plus strong depth; 60/40 blend lands at B-."
+    "overallNote": "Browse-only access plus strong depth; 60/40 blend lands at B-.",
+    "platformAgent": "none",
+    "platformAgentNote": "Its cited AI is back-office marketing decisioning (Databricks/Hightouch) that lifts salon bookings via personalized offers, not a customer-facing action-taking agent.",
+    "platformAgentSource": "https://www.retailtouchpoints.com/features/ai-playbook-how-petsmart-used-ai-decisioning-to-drive-a-22-lift-in-salon-bookings/620783/"
   },
   {
     "name": "Smart & Final",
@@ -1640,7 +1887,10 @@ const BUSINESSES = [
     "depth": "B",
     "depthNote": "Groceries catalog at $7.73B.",
     "overall": "—",
-    "overallNote": "Ungraded: capability is ungraded, so no overall rating."
+    "overallNote": "Ungraded: capability is ungraded, so no overall rating.",
+    "platformAgent": "none",
+    "platformAgentNote": "No first-party customer agent or action-taking assistant found in search.",
+    "platformAgentSource": "https://www.smartandfinal.com/"
   },
   {
     "name": "Bass Pro Shops",
@@ -1658,7 +1908,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Specialist depth at $7.56B.",
     "overall": "B-",
-    "overallNote": "Browse-only access plus strong depth; 60/40 blend lands at B-."
+    "overallNote": "Browse-only access plus strong depth; 60/40 blend lands at B-.",
+    "platformAgent": "none",
+    "platformAgentNote": "Its own privacy policy describes an AI chatbot that \"can answer questions and assist you\"; no evidence it searches-to-cart, books, or transacts.",
+    "platformAgentSource": "https://about.basspro.com/home/privacy-policy/"
   },
   {
     "name": "Williams Sonoma",
@@ -1678,7 +1931,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Specialist depth at $7.55B.",
     "overall": "C+",
-    "overallNote": "Blocked for agents plus strong depth; 60/40 blend lands at C+."
+    "overallNote": "Blocked for agents plus strong depth; 60/40 blend lands at C+.",
+    "platformAgent": "partial",
+    "platformAgentNote": "Olive, Williams Sonoma's AI sous-chef agent, plans menus, generates a shopping list, and recommends kitchen tools/products and design services; human completes any purchase.",
+    "platformAgentSource": "https://investor.salesforce.com/news/news-details/2025/Williams-Sonoma-Inc--Deploys-Salesforce-Agentforce-360-Across-Its-Brand-Portfolio-Elevating-Its-Premium-Customer-Support-and-Experiences-to-the-Next-Level/default.aspx"
   },
   {
     "name": "Army and Air Force Exchange Service",
@@ -1698,7 +1954,10 @@ const BUSINESSES = [
     "depth": "B",
     "depthNote": "General catalog at $7.48B.",
     "overall": "C",
-    "overallNote": "No usable agent channel plus moderate depth; 60/40 blend lands at C."
+    "overallNote": "No usable agent channel plus moderate depth; 60/40 blend lands at C.",
+    "platformAgent": "partial",
+    "platformAgentNote": "Manhattan Active Maven GenAI chatbot deployed by the Exchange handles order inquiries including shipping status, order changes, cancellations, and returns/exchanges; no evidence it completes a purchase itself.",
+    "platformAgentSource": "https://www.manh.com/about-us/newsroom/press-releases/army-air-force-exchange-service-uses-manhattans-new-genai-chatbot-to-elevate-their-customer-service"
   },
   {
     "name": "Amway",
@@ -1716,7 +1975,10 @@ const BUSINESSES = [
     "depth": "B",
     "depthNote": "General catalog at $7.35B.",
     "overall": "C",
-    "overallNote": "No usable agent channel plus moderate depth; 60/40 blend lands at C."
+    "overallNote": "No usable agent channel plus moderate depth; 60/40 blend lands at C.",
+    "platformAgent": "none",
+    "platformAgentNote": "Amway+ app has an AI assistant described only as answering questions, and an Amway Ana support-assistant domain exists; no evidence of search-to-order, reservation, change, refund, or checkout action.",
+    "platformAgentSource": "https://Www.Appbrain.com/app/amway-%E2%84%A2/com.amway.global.creators"
   },
   {
     "name": "Hobby Lobby",
@@ -1734,7 +1996,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Specialist depth at $7.26B.",
     "overall": "—",
-    "overallNote": "Ungraded: capability is ungraded, so no overall rating."
+    "overallNote": "Ungraded: capability is ungraded, so no overall rating.",
+    "platformAgent": "none",
+    "platformAgentNote": "No named first-party AI shopping assistant or action-taking assistant found for hobbylobby.com; hits were third-party chat characters and unrelated job-post spam.",
+    "platformAgentSource": "https://www.hobbylobby.com/"
   },
   {
     "name": "AVB BrandSource",
@@ -1752,7 +2017,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Network-wide Home scale at $7.02B (network figure, not one storefront).",
     "overall": "C+",
-    "overallNote": "No usable agent channel plus strong depth; 60/40 blend lands at C+."
+    "overallNote": "No usable agent channel plus strong depth; 60/40 blend lands at C+.",
+    "platformAgent": "none",
+    "platformAgentNote": "Member-store sites show \"Sam,\" an AI chatbot that answers general product questions only, with urgent/latest details referred to customer service; no ordering, reservation, or checkout action documented.",
+    "platformAgentSource": "https://www.burkesbrandsource.ca/product/whirlpool-chrome-shadow-top-load-washer-laundry-pair-whlauywed6120hc-679083"
   },
   {
     "name": "Bath & Body Works",
@@ -1770,7 +2038,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Specialist depth at $6.69B.",
     "overall": "—",
-    "overallNote": "Ungraded: capability is ungraded, so no overall rating."
+    "overallNote": "Ungraded: capability is ungraded, so no overall rating.",
+    "platformAgent": "none",
+    "platformAgentNote": "Gingham Genius is a generative-AI fragrance finder: customers describe a scent and receive personalized recommendations; no add-to-cart, reservation, or checkout action documented.",
+    "platformAgentSource": "https://www.retaildive.com/news/bath-body-works-generative-ai-tool-fragrance/725765/"
   },
   {
     "name": "Dell",
@@ -1790,7 +2061,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Specialist depth at $6.58B.",
     "overall": "B-",
-    "overallNote": "Browse-only access plus strong depth; 60/40 blend lands at B-."
+    "overallNote": "Browse-only access plus strong depth; 60/40 blend lands at B-.",
+    "platformAgent": "partial",
+    "platformAgentNote": "Dell Premier Virtual Assistant, available across Shop/Quote/Cart/Account pages, compares products and helps with Order Care and quotes, with handoff to human sellers; human completes the purchase.",
+    "platformAgentSource": "https://www.dell.com/support/kbdoc/en-us/000365592/dell-premier-virtual-assistant"
   },
   {
     "name": "True Value",
@@ -1808,7 +2082,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Specialist depth at $6.47B.",
     "overall": "B-",
-    "overallNote": "Browse-only access plus strong depth; 60/40 blend lands at B-."
+    "overallNote": "Browse-only access plus strong depth; 60/40 blend lands at B-.",
+    "platformAgent": "none",
+    "platformAgentNote": "No named first-party consumer AI assistant found for truevalue.com; searches were dominated by the unrelated firm True Value Infosoft.",
+    "platformAgentSource": "https://www.truevalue.com/"
   },
   {
     "name": "Total Wine & More",
@@ -1826,7 +2103,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Specialist depth at $6.39B.",
     "overall": "—",
-    "overallNote": "Ungraded: capability is ungraded, so no overall rating."
+    "overallNote": "Ungraded: capability is ungraded, so no overall rating.",
+    "platformAgent": "none",
+    "platformAgentNote": "App live chat connects to the human support team, and the app's virtual tasting assistant only suggests products from taste questions; no agent ordering, reservation, or checkout action documented.",
+    "platformAgentSource": "https://apps.apple.com/us/app/total-wine-more/id1277318070"
   },
   {
     "name": "Camping World",
@@ -1846,7 +2126,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Specialist depth at $6.37B.",
     "overall": "B-",
-    "overallNote": "Browse-only access plus strong depth; 60/40 blend lands at B-."
+    "overallNote": "Browse-only access plus strong depth; 60/40 blend lands at B-.",
+    "platformAgent": "none",
+    "platformAgentNote": "IBM Watson/watsonx-based virtual assistant is described for call-center/customer-service inquiries (RV maintenance, financing questions); no shopping, ordering, or checkout action documented.",
+    "platformAgentSource": "https://www.oreateai.com/blog/camping-world-revolutionizing-customer-experience-in-the-rv-industry/4d3caadb282f665dbae9eeaab894bd0b"
   },
   {
     "name": "JD Sports",
@@ -1868,7 +2151,10 @@ const BUSINESSES = [
     "depthNote": "Specialist depth at $6.37B.",
     "overall": "A+",
     "overallNote": "Full agent checkout plus strong depth; 60/40 blend lands at A+ (provisional).",
-    "overallProvisional": true
+    "overallProvisional": true,
+    "platformAgent": "none",
+    "platformAgentNote": "JD's agentic checkout runs inside third-party ChatGPT, Microsoft Copilot, and Google Gemini via commercetools/Stripe; under the hard rule this does not count, and no JD-owned assistant was found.",
+    "platformAgentSource": "https://www.retail-systems.com/rs/Jp_sports_to_launch_products_on_major_ai_platforms.php"
   },
   {
     "name": "Lululemon",
@@ -1886,7 +2172,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Specialist depth at $6.33B.",
     "overall": "—",
-    "overallNote": "Ungraded: capability is ungraded, so no overall rating."
+    "overallNote": "Ungraded: capability is ungraded, so no overall rating.",
+    "platformAgent": "none",
+    "platformAgentNote": "Lululemon virtual assistant is a support chatbot that gathers query information and transfers to a human agent, and it refers stylist-appointment requests to an online booking tool rather than booking in chat.",
+    "platformAgentSource": "https://www.assembled.com/page/chatbot-examples-use-cases"
   },
   {
     "name": "Casey's",
@@ -1906,7 +2195,10 @@ const BUSINESSES = [
     "depth": "B",
     "depthNote": "Convenience catalog at $6.32B.",
     "overall": "B+",
-    "overallNote": "Cart-building only plus moderate depth; 60/40 blend lands at B+."
+    "overallNote": "Cart-building only plus moderate depth; 60/40 blend lands at B+.",
+    "platformAgent": "full",
+    "platformAgentNote": "Casey's own phone-ordering voice agents (SoundHound, originally SYNQ3) greet callers, take and confirm pizza orders, and route them to the POS and loyalty system across 2,600+ stores, processing millions of orders. In-agent card payment is not explicitly documented in sources.",
+    "platformAgentSource": "https://www.cspdailynews.com/technologyservices/caseys-expands-ai-powered-ordering-agents-more-2600-stores"
   },
   {
     "name": "Dillard's",
@@ -1924,7 +2216,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Specialist depth at $6.27B.",
     "overall": "—",
-    "overallNote": "Ungraded: capability is ungraded, so no overall rating."
+    "overallNote": "Ungraded: capability is ungraded, so no overall rating.",
+    "platformAgent": "none",
+    "platformAgentNote": "Evidence points to human live-chat support for size, fit, returns, and promotions; no named first-party AI agent or action-taking assistant found.",
+    "platformAgentSource": "https://www.redmondpie.com/how-dillards-is-transforming-the-shopping-experience-with-mobile-tech/"
   },
   {
     "name": "Kay",
@@ -1942,7 +2237,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Specialist depth at $6.20B.",
     "overall": "—",
-    "overallNote": "Ungraded: capability is ungraded, so no overall rating."
+    "overallNote": "Ungraded: capability is ungraded, so no overall rating.",
+    "platformAgent": "none",
+    "platformAgentNote": "Kay/Signet's virtual service is human jewelry consultants via chat, video, and virtual appointments, not an AI agent; no AI ordering or checkout action found.",
+    "platformAgentSource": "https://www.nasdaq.com/articles/signet-sig-boosts-digital-offerings-to-enrich-holiday-shopping-2020-10-20"
   },
   {
     "name": "Staples",
@@ -1960,7 +2258,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Specialist depth at $6.10B.",
     "overall": "—",
-    "overallNote": "Ungraded: capability is ungraded, so no overall rating."
+    "overallNote": "Ungraded: capability is ungraded, so no overall rating.",
+    "platformAgent": "partial",
+    "platformAgentNote": "Zoovu's Zoe conversational product expert is deployed by Staples, answers with citations, explains why a product fits, and compares options across the shopping journey; no checkout completion by the assistant documented, so the human completes the purchase.",
+    "platformAgentSource": "https://zoovu.com/news/zoovu-launches-enhanced-ai-shopping-assistant-enterprise-ecommerce"
   },
   {
     "name": "Academy Sports + Outdoors",
@@ -1980,7 +2281,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Specialist depth at $6.02B.",
     "overall": "A+",
-    "overallNote": "Full agent checkout plus strong depth; 60/40 blend lands at A+."
+    "overallNote": "Full agent checkout plus strong depth; 60/40 blend lands at A+.",
+    "platformAgent": "partial",
+    "platformAgentNote": "Academy's own Scout is an AI agent-based search assistant that makes shopping conversational/contextual (e.g., describing a camping weekend) and returns tailored recommendations; no checkout action documented.",
+    "platformAgentSource": "https://www.cio.com/article/4182957/at-academy-sports-outdoors-ai-is-a-team-effort.html"
   },
   {
     "name": "JCPenney",
@@ -1998,7 +2302,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Specialist depth at $5.96B.",
     "overall": "—",
-    "overallNote": "Ungraded: capability is ungraded, so no overall rating."
+    "overallNote": "Ungraded: capability is ungraded, so no overall rating.",
+    "platformAgent": "none",
+    "platformAgentNote": "Revieve AI Skincare/Haircare Advisors and Makeup Virtual Try-On give personalized recommendations and try-on only; no agent ordering, reservation, change, or checkout action documented.",
+    "platformAgentSource": "https://www.digitalcommerce360.com/2024/11/21/jcpenney-ai-powered-beauty-advisors/"
   },
   {
     "name": "Piggly Wiggly",
@@ -2016,7 +2323,10 @@ const BUSINESSES = [
     "depth": "B",
     "depthNote": "Network-wide Groceries scale at $5.85B (network figure, not one storefront).",
     "overall": "C",
-    "overallNote": "No usable agent channel plus moderate depth; 60/40 blend lands at C."
+    "overallNote": "No usable agent channel plus moderate depth; 60/40 blend lands at C.",
+    "platformAgent": "none",
+    "platformAgentNote": "FocalOS is back-office store automation (ordering, inventory, merchandising, labor) piloted in Midwest stores, not a consumer-facing shopping agent.",
+    "platformAgentSource": "https://www.businesswire.com/news/home/20221013005152/en/Piggly-Wiggly-Midwest-Partners-with-Focal-Systems-to-Leverage-Artificial-Intelligence-and-Automation-to-Transform-the-Shopper-Experience"
   },
   {
     "name": "Petco",
@@ -2034,7 +2344,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Specialist depth at $5.77B.",
     "overall": "—",
-    "overallNote": "Ungraded: capability is ungraded, so no overall rating."
+    "overallNote": "Ungraded: capability is ungraded, so no overall rating.",
+    "platformAgent": "none",
+    "platformAgentNote": "Petco's consumer-facing AI chatbot appears only as a Q&A support bot in customer feedback, while its documented AI use is back-office prediction and merchandising; no agent ordering, booking, or checkout action found.",
+    "platformAgentSource": "https://investorplace.com/2026/10/3-stocks-to-buy-as-the-ai-trade-sputters/"
   },
   {
     "name": "Raley's",
@@ -2052,7 +2365,10 @@ const BUSINESSES = [
     "depth": "B",
     "depthNote": "Groceries catalog at $5.63B.",
     "overall": "—",
-    "overallNote": "Ungraded: capability is ungraded, so no overall rating."
+    "overallNote": "Ungraded: capability is ungraded, so no overall rating.",
+    "platformAgent": "none",
+    "platformAgentNote": "Raley's documented AI is pricing/promotion optimization and a personalized recommendation engine, not a consumer-facing assistant that searches, reserves, changes, or checks out.",
+    "platformAgentSource": "https://www.retailtouchpoints.com/features/raley-s-online-shopping-personalized-and-device-agnostic/16597/"
   },
   {
     "name": "Market Basket",
@@ -2070,7 +2386,10 @@ const BUSINESSES = [
     "depth": "F",
     "depthNote": "No online catalog to shop: no own-site online ordering at all.",
     "overall": "—",
-    "overallNote": "Ungraded: capability is ungraded, so no overall rating."
+    "overallNote": "Ungraded: capability is ungraded, so no overall rating.",
+    "platformAgent": "none",
+    "platformAgentNote": "No first-party agent or action-taking assistant found; no named chatbot/assistant in search results.",
+    "platformAgentSource": "https://www.shopmarketbasket.com/"
   },
   {
     "name": "Victoria's Secret",
@@ -2090,7 +2409,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Specialist depth at $5.43B.",
     "overall": "B-",
-    "overallNote": "Browse-only access plus strong depth; 60/40 blend lands at B-."
+    "overallNote": "Browse-only access plus strong depth; 60/40 blend lands at B-.",
+    "platformAgent": "none",
+    "platformAgentNote": "Planned Vertex AI conversational assistant described only as tailored product recommendations and advice, with AI image search for similar items; no add-to-cart, order, or checkout action evidenced.",
+    "platformAgentSource": "https://blog.google/innovation-and-ai/infrastructure-and-cloud/google-cloud/victorias-secret-google-cloud-ai/"
   },
   {
     "name": "IKEA",
@@ -2110,7 +2432,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Specialist depth at $5.30B.",
     "overall": "A+",
-    "overallNote": "Full agent checkout plus strong depth; 60/40 blend lands at A+."
+    "overallNote": "Full agent checkout plus strong depth; 60/40 blend lands at A+.",
+    "platformAgent": "partial",
+    "platformAgentNote": "Billie, IKEA's own chatbot, checks order status, reschedules deliveries and, per IKEA Spain, reschedules/cancels orders and handles missing/damaged delivery reports; human still completes purchases.",
+    "platformAgentSource": "https://www.ikea.com/ie/en/customer-service/knowledge/articles/40gbf81c-6005-4250-g2c1-97b54838gbgc.html"
   },
   {
     "name": "Michaels",
@@ -2130,7 +2455,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "Specialist depth at $5.29B.",
     "overall": "B-",
-    "overallNote": "Browse-only access plus strong depth; 60/40 blend lands at B-."
+    "overallNote": "Browse-only access plus strong depth; 60/40 blend lands at B-.",
+    "platformAgent": "partial",
+    "platformAgentNote": "Ask Mike (Gemini-powered, on michaels.com and apps) plans projects, asks for project type/colors/materials/budget and curates product recommendations, with 27% of interactions leading to a product-link click or add-to-cart; the shopper completes purchase.",
+    "platformAgentSource": "https://www.modernretail.co/technology/michaels-says-google-powered-ai-assistant-doubles-conversion-rate-of-traditional-search/"
   },
   {
     "name": "Defense Commissary Agency",
@@ -2148,7 +2476,10 @@ const BUSINESSES = [
     "depth": "B",
     "depthNote": "Groceries catalog at $4.83B.",
     "overall": "C",
-    "overallNote": "No usable agent channel plus moderate depth; 60/40 blend lands at C."
+    "overallNote": "No usable agent channel plus moderate depth; 60/40 blend lands at C.",
+    "platformAgent": "none",
+    "platformAgentNote": "No first-party agent found; Commissary CLICK2GO is a conventional online-order/curbside-pickup service with recipe-to-cart clicks by the shopper, not an assistant.",
+    "platformAgentSource": "https://www.dvidshub.net/news/449618/maxing-your-benefit-using-shopcommissariescom-can-make-shopping-quicker-easier-cost-effective"
   },
   {
     "name": "Stater Bros. Markets",
@@ -2166,7 +2497,10 @@ const BUSINESSES = [
     "depth": "B",
     "depthNote": "Groceries catalog at $4.81B.",
     "overall": "—",
-    "overallNote": "Ungraded: capability is ungraded, so no overall rating."
+    "overallNote": "Ungraded: capability is ungraded, so no overall rating.",
+    "platformAgent": "none",
+    "platformAgentNote": "AI found is back-office only: Afresh store-ordering/forecasting for produce and fresh departments, not a customer-facing shopping assistant.",
+    "platformAgentSource": "https://chainstoreage.com/news-briefs/2025-01-27?article=stater-bros-markets-ai-enables-store-ordering"
   },
   {
     "name": "Exxon Mobil",
@@ -2184,7 +2518,10 @@ const BUSINESSES = [
     "depth": "F",
     "depthNote": "No online catalog to shop: fuel cannot be bought online and no national merchandise checkout exists.",
     "overall": "—",
-    "overallNote": "Ungraded: capability is ungraded, so no overall rating."
+    "overallNote": "Ungraded: capability is ungraded, so no overall rating.",
+    "platformAgent": "none",
+    "platformAgentNote": "No named first-party AI shopping/payment agent found; Exxon offers a support \"Chat with us\" contact and a Rewards+ app for pay-at-pump by the user, neither an agent acting on the user's behalf.",
+    "platformAgentSource": "https://www.exxon.com/contact-us"
   },
   {
     "name": "Overstock",
@@ -2202,7 +2539,10 @@ const BUSINESSES = [
     "depth": "B",
     "depthNote": "Home catalog at $4.76B.",
     "overall": "—",
-    "overallNote": "Ungraded: capability is ungraded, so no overall rating."
+    "overallNote": "Ungraded: capability is ungraded, so no overall rating.",
+    "platformAgent": "none",
+    "platformAgentNote": "Customer-facing Chloe is described only as a beta chatbot that hands off to a live representative; the well-documented Mila bot was internal (employee sick-leave/scheduling), not a shopper agent.",
+    "platformAgentSource": "https://find-your-support.com/o-support/overstock-live-chat-support.html"
   },
   {
     "name": "Five Below",
@@ -2220,7 +2560,10 @@ const BUSINESSES = [
     "depth": "B",
     "depthNote": "General catalog at $4.76B.",
     "overall": "—",
-    "overallNote": "Ungraded: capability is ungraded, so no overall rating."
+    "overallNote": "Ungraded: capability is ungraded, so no overall rating.",
+    "platformAgent": "unknown",
+    "platformAgentNote": "A low-credibility app aggregator claims an in-app AI virtual shopping assistant for product search/suggestions, but no company announcement or official app description confirms it.",
+    "platformAgentSource": "https://gleeglitz.com/sitemap_index.xml/five-below/com.hollar.android"
   },
   {
     "name": "American Eagle",
@@ -2238,7 +2581,10 @@ const BUSINESSES = [
     "depth": "B",
     "depthNote": "Apparel catalog at $4.70B.",
     "overall": "—",
-    "overallNote": "Ungraded: capability is ungraded, so no overall rating."
+    "overallNote": "Ungraded: capability is ungraded, so no overall rating.",
+    "platformAgent": "partial",
+    "platformAgentNote": "Nov 2024 WhatsApp pilot: a one-on-one AI consultant gave personalized gift recommendations by budget/product/recipient preference, with purchase possible directly within the app; shopper still makes the purchase.",
+    "platformAgentSource": "https://ChainStoreage.com/exclusive-american-eagle-whatsapp-team-gen-z-focused-holiday-pilot"
   },
   {
     "name": "Grocery Outlet",
@@ -2256,7 +2602,10 @@ const BUSINESSES = [
     "depth": "B",
     "depthNote": "Network-wide Groceries scale at $4.69B (network figure, not one storefront). Site is primarily informational.",
     "overall": "C",
-    "overallNote": "No usable agent channel plus moderate depth; 60/40 blend lands at C."
+    "overallNote": "No usable agent channel plus moderate depth; 60/40 blend lands at C.",
+    "platformAgent": "none",
+    "platformAgentNote": "No first-party agent or action-taking assistant found in search; only third-party grocery assistants (Instacart Clementine, etc.) surfaced, which do not count.",
+    "platformAgentSource": "https://www.groceryoutlet.com/"
   },
   {
     "name": "Weis Markets",
@@ -2274,7 +2623,10 @@ const BUSINESSES = [
     "depth": "B",
     "depthNote": "Groceries catalog at $4.69B.",
     "overall": "—",
-    "overallNote": "Ungraded: capability is ungraded, so no overall rating."
+    "overallNote": "Ungraded: capability is ungraded, so no overall rating.",
+    "platformAgent": "none",
+    "platformAgentNote": "AI found is back-office (Cognira PromoAI for promotions) and third-party in-store tech (Instacart Caper Carts); no Weis-owned customer shopping assistant found.",
+    "platformAgentSource": "https://www.producemarketguide.com/news/instacart-and-weis-markets-launch-ai-powered-caper-carts-transform-store-shopping"
   },
   {
     "name": "Ingles Markets",
@@ -2292,7 +2644,10 @@ const BUSINESSES = [
     "depth": "B",
     "depthNote": "Groceries catalog at $4.50B.",
     "overall": "—",
-    "overallNote": "Ungraded: capability is ungraded, so no overall rating."
+    "overallNote": "Ungraded: capability is ungraded, so no overall rating.",
+    "platformAgent": "none",
+    "platformAgentNote": "App features are conventional: shopping lists, barcode scan, store item locations, weekly ads, digital coupons and personalized recommendations; no conversational/action-taking assistant found.",
+    "platformAgentSource": "https://www.ingles-markets.com/"
   },
   {
     "name": "Murphy USA",
@@ -2310,7 +2665,10 @@ const BUSINESSES = [
     "depth": "F",
     "depthNote": "No online catalog to shop: fuel cannot be bought online and no national merchandise checkout exists.",
     "overall": "—",
-    "overallNote": "Ungraded: capability is ungraded, so no overall rating."
+    "overallNote": "Ungraded: capability is ungraded, so no overall rating.",
+    "platformAgent": "none",
+    "platformAgentNote": "Murphy Drive Rewards app offers station finder, price checks, deals and points redemption by the user; no AI assistant or agent found.",
+    "platformAgentSource": "https://www.murphydriverewards.com/driverewards/letsdrive"
   },
   {
     "name": "Advance Auto Parts",
@@ -2328,7 +2686,10 @@ const BUSINESSES = [
     "depth": "B",
     "depthNote": "Auto catalog at $4.30B.",
     "overall": "—",
-    "overallNote": "Ungraded: capability is ungraded, so no overall rating."
+    "overallNote": "Ungraded: capability is ungraded, so no overall rating.",
+    "platformAgent": "none",
+    "platformAgentNote": "AI found is back-office fulfillment (OneRail delivery orchestration) plus generic speculation about future chatbots; no customer-facing first-party assistant found.",
+    "platformAgentSource": "https://www.digitalcommerce360.com/2026/06/17/advance-auto-parts-onerail-ai-powered-fulfillment/"
   },
   {
     "name": "Schnucks",
@@ -2348,7 +2709,10 @@ const BUSINESSES = [
     "depth": "B",
     "depthNote": "Groceries catalog at $4.10B.",
     "overall": "B+",
-    "overallNote": "Cart-building only plus moderate depth; 60/40 blend lands at B+."
+    "overallNote": "Cart-building only plus moderate depth; 60/40 blend lands at B+.",
+    "platformAgent": "partial",
+    "platformAgentNote": "Schnucks' own agentic AI assistant (co-developed with VitalityIP, in the Rewards app and schnucks.com) builds shopping lists and Schnucks Delivers/Curbside Pickup orders from a budget and weekly deals, plus meal/deal planning with aisle locations; shopper still checks out.",
+    "platformAgentSource": "https://schnucks.com/news-releases/vitalityip-and-schnucks-pioneer-agentic-commerce-with-personalized-shopping-assistant"
   },
   {
     "name": "Abercrombie & Fitch",
@@ -2369,7 +2733,10 @@ const BUSINESSES = [
     "depthNote": "Apparel catalog at $4.09B.",
     "overall": "A-",
     "overallNote": "Full agent checkout plus moderate depth; 60/40 blend lands at A- (provisional).",
-    "overallProvisional": true
+    "overallProvisional": true,
+    "platformAgent": "none",
+    "platformAgentNote": "No first-party action-taking assistant found; the in-app AI stylist is recommendation-only, and its announced agentic channel is third-party Perplexity/PayPal/Cymbio checkout, which is excluded by the hard rule.",
+    "platformAgentSource": "https://www.retail-systems.com/rs/Abercrombie_And_Fitch_Takes_Steps_To_Become_Purchasable_Via_AI_Chatbots.php"
   },
   {
     "name": "Save-A-Lot",
@@ -2387,7 +2754,10 @@ const BUSINESSES = [
     "depth": "B",
     "depthNote": "Network-wide Groceries scale at $4.06B (network figure, not one storefront). Central site is locator/ads only.",
     "overall": "C",
-    "overallNote": "No usable agent channel plus moderate depth; 60/40 blend lands at C."
+    "overallNote": "No usable agent channel plus moderate depth; 60/40 blend lands at C.",
+    "platformAgent": "none",
+    "platformAgentNote": "App features are rewards (Dots), weekly ads and coupons only; no AI assistant or action-taking agent found.",
+    "platformAgentSource": "https://apps.apple.com/us/app/save-a-lot/id6479452565"
   },
   {
     "name": "American Airlines",
@@ -2407,7 +2777,9 @@ const BUSINESSES = [
     "depth": "A+",
     "depthNote": "FY2025 revenue $54.6B, above the $50B generalist A+ threshold.",
     "overall": "A-",
-    "overallNote": "A- is arithmetic only (depth-heavy); it does not mean consumer agent checkout exists."
+    "overallNote": "A- is arithmetic only (depth-heavy); it does not mean consumer agent checkout exists.",
+    "platformAgent": "partial",
+    "platformAgentNote": "American's first-party GenAI trip search on aa.com returns live prices for the human to book; payment stays on the site."
   },
   {
     "name": "Delta Air Lines",
@@ -2425,7 +2797,10 @@ const BUSINESSES = [
     "depth": "A+",
     "depthNote": "FY2025 revenue $63.4B, above the $50B generalist A+ threshold.",
     "overall": "C+",
-    "overallNote": "C+ is purely the 40% depth weight; capability itself is a fail (F)."
+    "overallNote": "C+ is purely the 40% depth weight; capability itself is a fail (F).",
+    "platformAgent": "none",
+    "platformAgentNote": "No live first-party agent found; a reported test of Delta's own agent-oriented browser is unconfirmed beyond one secondary mention.",
+    "platformAgentSource": "https://dev.to/joho_todai/airlines-banks-and-retailers-turn-away-ai-agents-the-web-is-closing-its-gates-3cja"
   },
   {
     "name": "United Airlines",
@@ -2445,7 +2820,9 @@ const BUSINESSES = [
     "depth": "A+",
     "depthNote": "FY2025 revenue $59.07B, above the $50B generalist A+ threshold.",
     "overall": "A-",
-    "overallNote": "A- is arithmetic only (depth-heavy); it does not mean consumer agent checkout exists, and the automation-terms signal should be re-checked before any upgrade or downgrade."
+    "overallNote": "A- is arithmetic only (depth-heavy); it does not mean consumer agent checkout exists, and the automation-terms signal should be re-checked before any upgrade or downgrade.",
+    "platformAgent": "none",
+    "platformAgentNote": "United's website chatbot handles routine support queries only (Q&A); no first-party agent completes transactions."
   },
   {
     "name": "Southwest Airlines",
@@ -2465,7 +2842,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "FY2025 revenue $28.1B, at/above the $10B A threshold and below the $50B A+ threshold.",
     "overall": "B-",
-    "overallNote": "B- reflects a large generalist catalog with browse-only agent access, not any booking capability."
+    "overallNote": "B- reflects a large generalist catalog with browse-only agent access, not any booking capability.",
+    "platformAgent": "none",
+    "platformAgentNote": "No first-party agent found; Southwest's live agent surface is a third-party ChatGPT plugin, with payment on southwest.com.",
+    "platformAgentSource": "https://press.aboutamazon.com/aws/2026/10/southwest-airlines-launches-first-of-its-kind-u-s-airline-plugin-in-chatgpt"
   },
   {
     "name": "Alaska Airlines",
@@ -2486,7 +2866,10 @@ const BUSINESSES = [
     "depth": "A",
     "depthNote": "$14.239B ≥ $10B and < $50B; generalist airline.",
     "overall": "B+",
-    "overallNote": "First-party AI plus B2B API lift it above browse-only, but no consumer-agent booking keeps it out of A-range."
+    "overallNote": "First-party AI plus B2B API lift it above browse-only, but no consumer-agent booking keeps it out of A-range.",
+    "platformAgent": "partial",
+    "platformAgentNote": "Alaska Inspires, a first-party AI natural-language search, discovers and compares trips; booking completes through the normal site flow.",
+    "platformAgentSource": "https://www.customerexperiencedive.com/news/alaska-airlines-natural-language-search-trip-planning/807705/"
   },
   {
     "name": "JetBlue",
@@ -2506,7 +2889,10 @@ const BUSINESSES = [
     "depth": "B",
     "depthNote": "$9.062B ≥ $1B and < $10B; generalist airline.",
     "overall": "C+",
-    "overallNote": "Solid scale cannot offset the absence of any agent channel beyond browse."
+    "overallNote": "Solid scale cannot offset the absence of any agent channel beyond browse.",
+    "platformAgent": "partial",
+    "platformAgentNote": "JetBlue Vacations + Utrip (2017) first-party AI trip-planning portal builds vacation-package itineraries; currency in 2026 unverified.",
+    "platformAgentSource": "https://ir.jetblue.com/news/news-details/2017/JetBlue-Vacations-and-Utrip-Launch-Artificial-Intelligence-Based-Trip-Planning-Portal-06-13-2017/"
   },
   {
     "name": "Frontier Airlines",
@@ -2527,7 +2913,10 @@ const BUSINESSES = [
     "depth": "B",
     "depthNote": "$3.724B ≥ $1B and < $10B; generalist airline.",
     "overall": "B",
-    "overallNote": "B2B API plus live support agent justify B capability, but status stays limited because neither is consumer-agent booking."
+    "overallNote": "B2B API plus live support agent justify B capability, but status stays limited because neither is consumer-agent booking.",
+    "platformAgent": "partial",
+    "platformAgentNote": "Frontier's first-party AI agent (Cognigy) validates reservations, links reservation changes, and processes refunds; it does not book new flights with payment.",
+    "platformAgentSource": "https://www.cognigy.com/en/case-study/frontier-airlines"
   },
   {
     "name": "Spirit Airlines",
@@ -2546,7 +2935,9 @@ const BUSINESSES = [
     "depth": "B",
     "depthNote": "FY2025 combined revenue $3.797B ≥ $1B; this is a historical figure for a defunct carrier, not a live catalog.",
     "overall": "C",
-    "overallNote": "This C is an arithmetic artifact of historical revenue and must NOT be read as 'bookable' — the airline is defunct and cannot be booked; see the defunct notice."
+    "overallNote": "This C is an arithmetic artifact of historical revenue and must NOT be read as 'bookable' — the airline is defunct and cannot be booked; see the defunct notice.",
+    "platformAgent": "none",
+    "platformAgentNote": "No live first-party agent; the airline ceased operations May 2, 2026."
   },
   {
     "name": "Hawaiian Airlines",
@@ -2564,7 +2955,9 @@ const BUSINESSES = [
     "depth": "B",
     "depthNote": "FY2023 standalone revenue $2.716B; post-acquisition partial-year figures were not substituted for a full year.",
     "overall": "C+",
-    "overallNote": "Browse capability pulls the overall down to C+ despite B depth."
+    "overallNote": "Browse capability pulls the overall down to C+ despite B depth.",
+    "platformAgent": "none",
+    "platformAgentNote": "No first-party action-taking assistant found."
   },
   {
     "name": "Allegiant Air",
@@ -2582,7 +2975,9 @@ const BUSINESSES = [
     "depth": "B",
     "depthNote": "FY2025 total operating revenue $2.607B from the 10-K.",
     "overall": "C+",
-    "overallNote": "Browse capability limits the overall to C+ despite B depth."
+    "overallNote": "Browse capability limits the overall to C+ despite B depth.",
+    "platformAgent": "unknown",
+    "platformAgentNote": "Claimed 'AVA' assistant rests on a single low-quality unverified source; kept unknown rather than none."
   },
   {
     "name": "Sun Country Airlines",
@@ -2600,6 +2995,8 @@ const BUSINESSES = [
     "depth": "B",
     "depthNote": "FY2025 standalone total operating revenue $1.127B from the 10-K.",
     "overall": "—",
-    "overallNote": "Ungraded overall because capability is ungraded; depth alone does not produce an overall."
+    "overallNote": "Ungraded overall because capability is ungraded; depth alone does not produce an overall.",
+    "platformAgent": "unknown",
+    "platformAgentNote": "Claimed 'Elisa' assistant appears only in low-quality spam-template pages with no first-party confirmation; kept unknown rather than none."
   }
 ];
