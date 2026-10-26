@@ -206,6 +206,23 @@ Shopping in-app; Rufus was retired May 13, 2026).
 
 ## Verification history
 
+- 2026-10-25 (check-access run on 50 unknown entries, adjudicated by
+  hand): `check-access.js` run over all 50 unknown-status entries; 44
+  stay unknown, 4 move to browse on live llms.txt evidence
+  (Discount Tire, Dillard's, Kay, American Eagle, all C- capability;
+  overalls B-, B-, B-, C+), each with an announcement search finding
+  no live agent-checkout integration. Two script suggestions
+  rejected: Tops blocked/F (robots names only Amazonbot sitewide, a
+  single-vendor crawler block, not consumer shopping-agent policy;
+  prior Oct 24 judgment confirmed) and Sherwin-Williams browse/C-
+  (llms.txt returns 200 with an empty body, confirmed twice, so no
+  discoverability signal). 16 entries could not be read at all (403
+  bot walls or timeouts on all three fetches, including Lululemon,
+  JCPenney, Petco, Five Below) and remain unknown as gaps, not
+  absence. Directory status now unknown 46, browse 23; capability
+  C- 27, ungraded 40; overall B- 24, C+ 17, ungraded 40. Portable copy
+  rebuilt.
+
 - 2026-10-25 (announced/onboarding re-grade on available capability):
   announced is very different from implemented, so the 15 announced (11)
   and onboarding (4) entries were re-graded on what is actually
