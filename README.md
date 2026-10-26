@@ -206,6 +206,26 @@ Shopping in-app; Rufus was retired May 13, 2026).
 
 ## Verification history
 
+- 2026-10-25 (announced/onboarding re-grade on available capability):
+  announced is very different from implemented, so the 15 announced (11)
+  and onboarding (4) entries were re-graded on what is actually
+  available today; announcement data (status, evidence, source,
+  channels, sales, depth) is untouched. Provisional target grades are
+  retired: `overallProvisional` removed from all 15 entries, and no
+  entry in the file carries it. New capability: Best Buy C-, Gap D,
+  Sephora D, URBN D, Ashley C-, Revolve D, Halara D, Lowe's C-
+  (unchanged, Mylow discovery is live), Apple D, Aldi D, Macy's C-
+  (unchanged, Ask Macy's discovery is live), Ulta B+ (live ChatGPT
+  bag-transfer handoff; claimed Google AI Mode checkout unverified and
+  not counted), Sprouts D, JD Sports D, Abercrombie D. New overall:
+  Best Buy B-, Gap C+, Sephora C+, URBN C, Ashley B-, Revolve C,
+  Halara C-, Lowe's B-, Apple B-, Aldi B-, Macy's B-, Ulta A-, Sprouts
+  C, JD Sports C+, Abercrombie C. Directory capability now A+ 18, B+
+  9, B 9, C- 23, D 20, F 6, ungraded 44; overall now A+ 9, A- 12, B+ 14,
+  B 1, B- 21, C+ 16, C 11, C- 1, ungraded 44. No announced or onboarding
+  entry now ranks on an announcement: the highest, Ulta B+, rests on a
+  live cart channel, not a target.
+
 - 2026-10-25 (platform-provided agent retail merge): the 118 retail
   entries' `platformAgent` values merged from
   `retail-platform-agents-report-2026-10-25.md` (full 2: Amazon,

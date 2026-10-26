@@ -35,7 +35,9 @@
 //   overall: weighted rating, 60% capability + 40% depth (see formula below)
 //     "A+" | "A" | "A-" | "B+" | "B" | "B-" | "C+" | "C" | "C-" | "D" | "F" | "—"
 //   overallNote: one line: the blend and why
-//   overallProvisional: true only for announced/onboarding entries (omit otherwise)
+//   overallProvisional: RETIRED 2026-10-25. No entry carries it.
+//     Announced/onboarding entries are graded on available capability
+//     only; see the capability section.
 //   defunct: true only for businesses that have ceased operations (omit otherwise);
 //     renders a Defunct badge on the card and a defunct notice on the detail page.
 //   platformAgent: the business's OWN first-party agent only. Third-party
@@ -71,11 +73,14 @@
 //   No policy found (status unknown) -> "—", except the six networks above,
 //     which are D. Ungraded is not a failing grade: absence of evidence is
 //     not a block.
-//   Announced/onboarding: the grade the announced integration targets
-//     (full checkout -> A+, cart assistant -> B+, discovery/first-party
-//     assistant -> C-), with overallProvisional: true. Provisional targets:
-//     A+: Ulta, JD Sports, Best Buy, Gap, Sephora, URBN, Ashley, Revolve,
-//     Halara, Abercrombie; B+: Sprouts, Aldi; C-: Lowe's, Macy's, Apple.
+//   Announced/onboarding: graded on available capability only.
+//     Announcement data (status, evidence, source) is preserved, but
+//     grades never reflect announced targets. Provisional grading was
+//     retired 2026-10-25: announced entries that once carried target
+//     grades (full checkout, cart assistant, discovery assistant) were
+//     re-graded on what is actually available, so an announced entry
+//     with no live channel grades D (or C- where live discovery
+//     exists), never the announced target.
 //   Conversion from the previous single grade (verified, not blindly copied):
 //     old verified A-band (A+, A, A-) were all checkout entries -> A+;
 //     old B+ -> B+; old B -> B; old C- -> C-; old D -> D; old F -> F;
@@ -121,8 +126,7 @@
 //   Map: >=95 A+, 85-94 A, 75-84 A-, 65-74 B+, 55-64 B, 45-54 B-, 35-44 C+,
 //     25-34 C, 15-24 C-, 5-14 D, <5 F.
 //   If capability is "—", overall is "—" regardless of depth.
-//   overallProvisional is true exactly when capability is provisional
-//     (i.e. announced/onboarding entries only).
+//   overallProvisional is retired (2026-10-25); no entry carries it.
 //
 // UNGRADED RULE: "—" is not a failing grade. Capability "—" means no agent
 // policy was found; depth "—" means depth cannot be assessed from available
@@ -279,13 +283,12 @@ const BUSINESSES = [
     "verified": "2026-10-24",
     "sales": 38.23,
     "salesNote": "NRF Top 100 Retailers 2026 (Kantar), 2025 US retail sales",
-    "capability": "A+",
-    "capabilityNote": "Provisional: announced, live checkout unverified. Full-checkout target.",
+    "capability": "C-",
+    "capabilityNote": "Announced Muse checkout; live today is discovery only (robots allow /site/ and /discover-learn/ only; cart, pricing, and API paths disallowed), so graded on available capability.",
     "depth": "A",
     "depthNote": "Specialist depth at $38.23B.",
-    "overall": "A+",
-    "overallNote": "Full agent checkout plus strong depth; 60/40 blend lands at A+ (provisional).",
-    "overallProvisional": true,
+    "overall": "B-",
+    "overallNote": "Discovery-only access plus strong depth; 60/40 blend lands at B-.",
     "platformAgent": "partial",
     "platformAgentNote": "Ask Blue compares products, checks fit/compatibility and pricing, while Best Buy's genAI virtual assistant also changes order delivery/scheduling and manages software, Geek Squad and membership subscriptions; no Ask Blue checkout evidenced.",
     "platformAgentSource": "https://www.accenture.com/en/case-studies/ai-data/best-buy-humanizes-customer-experience-genai?country=US"
@@ -305,13 +308,12 @@ const BUSINESSES = [
     "verified": "2026-10-24",
     "sales": 13.43,
     "salesNote": "NRF Top 100 Retailers 2026 (Kantar), 2025 US retail sales",
-    "capability": "A+",
-    "capabilityNote": "Provisional: announced, live checkout unverified. Full-checkout target.",
+    "capability": "D",
+    "capabilityNote": "Announced Muse and Gemini/UCP checkout; no live agent channel verified (no live UCP profile, 404), so graded on available capability (none).",
     "depth": "A",
     "depthNote": "Specialist depth at $13.43B.",
-    "overall": "A+",
-    "overallNote": "Full agent checkout plus strong depth; 60/40 blend lands at A+ (provisional).",
-    "overallProvisional": true,
+    "overall": "C+",
+    "overallNote": "No live agent channel plus strong depth; 60/40 blend lands at C+.",
     "platformAgent": "partial",
     "platformAgentNote": "Gap Inc. digital assistant (Chat with Us, all brands incl. Gap, Banana Republic, Old Navy, Athleta) helps manage returns, payments and order tracking, plus conversational discovery at Old Navy/Banana Republic; human completes purchase.",
     "platformAgentSource": "https://www.gapinc.com/en-us/articles/2025/11/gap-inc-is-using-ai-to-reimagine-retail,-with-new-"
@@ -329,13 +331,12 @@ const BUSINESSES = [
     "verified": "2026-10-24",
     "sales": 8.89,
     "salesNote": "NRF Top 100 Retailers 2026 (Kantar), 2025 US retail sales; figure is the Sephora (LVMH) total",
-    "capability": "A+",
-    "capabilityNote": "Provisional: announced, live checkout unverified. Full-checkout target.",
+    "capability": "D",
+    "capabilityNote": "Announced Muse checkout; no live agent channel verified (UCP check inconclusive), so graded on available capability (none).",
     "depth": "A",
     "depthNote": "Specialist depth at $8.89B.",
-    "overall": "A+",
-    "overallNote": "Full agent checkout plus strong depth; 60/40 blend lands at A+ (provisional).",
-    "overallProvisional": true,
+    "overall": "C+",
+    "overallNote": "No live agent channel plus strong depth; 60/40 blend lands at C+.",
     "platformAgent": "partial",
     "platformAgentNote": "Reservation Assistant books in-store makeover appointments, and Virtual Artist lets shoppers try shades and add products to the basket; human completes purchase on sephora.com.",
     "platformAgentSource": "https://www.cosmeticsbusiness.com/news/article_page/Sephora_introduces_chatbot_that_can_reserve_appointments/122631"
@@ -465,13 +466,12 @@ const BUSINESSES = [
     "verified": "2026-10-24",
     "sales": 4.63,
     "salesNote": "NRF Top 100 Retailers 2026 (Kantar), 2025 US retail sales; figure is the Urban Outfitters total",
-    "capability": "A+",
-    "capabilityNote": "Provisional: onboarding, live checkout unverified. Full-checkout target.",
+    "capability": "D",
+    "capabilityNote": "Onboarding to Stripe's suite; no live agent-checkout evidence on the brand storefronts, so graded on available capability (none).",
     "depth": "B",
     "depthNote": "Apparel catalog at $4.63B.",
-    "overall": "A-",
-    "overallNote": "Full agent checkout plus moderate depth; 60/40 blend lands at A- (provisional).",
-    "overallProvisional": true,
+    "overall": "C",
+    "overallNote": "No live agent channel plus moderate depth; 60/40 blend lands at C.",
     "platformAgent": "none",
     "platformAgentNote": "No first-party shopper assistant found; URBN's documented agentic AI is internal weekly merchandising reporting, and its shopper checkout appears via Microsoft Copilot (third-party).",
     "platformAgentSource": "https://www.customerexperiencedive.com/news/3-retailers-agentic-ai-experiences/810031/"
@@ -583,13 +583,12 @@ const BUSINESSES = [
     "verified": "2026-10-24",
     "sales": 10.3,
     "salesNote": "2022 revenue via Forbes citation; dated, conflicting figures noted",
-    "capability": "A+",
-    "capabilityNote": "Provisional: onboarding, live checkout unverified. Full-checkout target.",
+    "capability": "C-",
+    "capabilityNote": "Onboarding to Stripe's suite with no live checkout surface; robots allow named-agent crawl only, so available capability is discovery only.",
     "depth": "A",
     "depthNote": "Specialist depth at $10.30B.",
-    "overall": "A+",
-    "overallNote": "Full agent checkout plus strong depth; 60/40 blend lands at A+ (provisional).",
-    "overallProvisional": true,
+    "overall": "B-",
+    "overallNote": "Discovery-only access plus strong depth; 60/40 blend lands at B-.",
     "platformAgent": "none",
     "platformAgentNote": "Ashley Assist is associate-facing (store/field staff product lookup); the shopper-facing transactional experience is Perplexity + PayPal, which is third-party and excluded.",
     "platformAgentSource": "https://www.freshworks.com/theworks/customer-experience/ai-holiday-retail-2025/"
@@ -607,13 +606,12 @@ const BUSINESSES = [
     "verified": "2026-10-24",
     "sales": 1.23,
     "salesNote": "FY2025 net sales, company results",
-    "capability": "A+",
-    "capabilityNote": "Provisional: onboarding, live checkout unverified. Full-checkout target.",
+    "capability": "D",
+    "capabilityNote": "Onboarding to Stripe's suite; no live agent channel named, so graded on available capability (none).",
     "depth": "B",
     "depthNote": "Apparel catalog at $1.23B.",
-    "overall": "A-",
-    "overallNote": "Full agent checkout plus moderate depth; 60/40 blend lands at A- (provisional).",
-    "overallProvisional": true,
+    "overall": "C",
+    "overallNote": "No live agent channel plus moderate depth; 60/40 blend lands at C.",
     "platformAgent": "none",
     "platformAgentNote": "No Revolve-owned shopping agent found; its AI commerce presence is third-party, via Microsoft Copilot/Curated for You discovery.",
     "platformAgentSource": "https://www.retailcustomerexperience.com/news/microsoft-revolve-launch-ai-driven-fashion-experience/"
@@ -631,13 +629,12 @@ const BUSINESSES = [
     "verified": "2026-10-24",
     "sales": null,
     "salesNote": "no credible reported revenue figure found, Oct 2026 check",
-    "capability": "A+",
-    "capabilityNote": "Provisional: onboarding, live checkout unverified. Full-checkout target.",
+    "capability": "D",
+    "capabilityNote": "Onboarding to Stripe's suite; no live agent channel named, so graded on available capability (none).",
     "depth": "C",
     "depthNote": "Single-brand Apparel catalog with no reported sales figure.",
-    "overall": "B+",
-    "overallNote": "Full agent checkout plus narrow depth; 60/40 blend lands at B+ (provisional).",
-    "overallProvisional": true,
+    "overall": "C-",
+    "overallNote": "No live agent channel plus narrow depth; 60/40 blend lands at C-.",
     "platformAgent": "none",
     "platformAgentNote": "No named first-party action-taking assistant found; only reviewer mentions of a support/returns AI flow, which counts as Q&A/support, not partial.",
     "platformAgentSource": "https://halara.pissedconsumer.com/review.html"
@@ -958,12 +955,11 @@ const BUSINESSES = [
     "sales": 83.96,
     "salesNote": "NRF Top 100 Retailers 2026 (Kantar), 2025 US retail sales",
     "capability": "C-",
-    "capabilityNote": "Provisional: announced, live checkout unverified. Discovery-assistant target.",
+    "capabilityNote": "Mylow discovery assistant is live, but no checkout through it verified; announced Sponsored Agents pilot not counted.",
     "depth": "A+",
     "depthNote": "Home breadth at $83.96B.",
     "overall": "B-",
-    "overallNote": "Browse-only access plus deepest catalog; 60/40 blend lands at B- (provisional).",
-    "overallProvisional": true,
+    "overallNote": "Discovery-only access plus deepest catalog; 60/40 blend lands at B-.",
     "platformAgent": "partial",
     "platformAgentNote": "Mylow, on Lowes.com/app, gives project guidance and recommendations and, via its purchase agent (e.g. \"Mulch Me Now\"), can add products to the cart and direct the shopper to checkout; human completes checkout.",
     "platformAgentSource": "https://www.modernretail.co/technology/lowes-aims-to-make-mulch-buying-easier-with-ai/"
@@ -1004,13 +1000,12 @@ const BUSINESSES = [
     "verified": "2026-10-24",
     "sales": 75.9,
     "salesNote": "NRF Top 100 Retailers 2026 (Kantar), 2025 US retail sales; figure is the Apple Stores / iTunes total",
-    "capability": "C-",
-    "capabilityNote": "Provisional: announced, live checkout unverified. Discovery-assistant target.",
+    "capability": "D",
+    "capabilityNote": "Virtual Shopping Assistant documented but unlaunched and absent from the app; no live agent channel today, so graded on available capability (none).",
     "depth": "A+",
     "depthNote": "Electronics breadth at $75.90B.",
     "overall": "B-",
-    "overallNote": "Browse-only access plus deepest catalog; 60/40 blend lands at B- (provisional).",
-    "overallProvisional": true,
+    "overallNote": "No live agent channel plus deepest catalog; 60/40 blend lands at B-.",
     "platformAgent": "none",
     "platformAgentNote": "Apple Store app's Virtual Shopping Assistant is in limited Early Preview and answers product, order, trade-in, carrier-offer and payment questions and compares lineups; no documented add-to-cart, reserve or purchase action.",
     "platformAgentSource": "https://9to5mac.com/2026/08/24/apple-store-app-is-testing-an-ai-shopping-assistant/"
@@ -1074,13 +1069,12 @@ const BUSINESSES = [
     "verified": "2026-10-24",
     "sales": 58.36,
     "salesNote": "NRF Top 100 Retailers 2026 (Kantar), 2025 US retail sales",
-    "capability": "B+",
-    "capabilityNote": "Provisional: announced, live checkout unverified. Cart-assistant target.",
+    "capability": "D",
+    "capabilityNote": "Instacart Cart Assistant forthcoming, not live; robots restrict crawling, so graded on available capability (none).",
     "depth": "A+",
     "depthNote": "Groceries breadth at $58.36B.",
-    "overall": "A-",
-    "overallNote": "Cart-building only plus deepest catalog; 60/40 blend lands at A- (provisional).",
-    "overallProvisional": true,
+    "overall": "B-",
+    "overallNote": "No live agent channel plus deepest catalog; 60/40 blend lands at B-.",
     "platformAgent": "none",
     "platformAgentNote": "No first-party customer agent found; Aldi's only cited AI cart surface is Instacart's white-label Cart Assistant, listed as \"to follow,\" not live Aldi-owned agent.",
     "platformAgentSource": "https://chainstoreage.com/instacart-and-shipt-launch-ai-shopping-assistants"
@@ -1297,12 +1291,11 @@ const BUSINESSES = [
     "sales": 21.68,
     "salesNote": "NRF Top 100 Retailers 2026 (Kantar), 2025 US retail sales",
     "capability": "C-",
-    "capabilityNote": "Provisional: announced, live checkout unverified. Discovery-assistant target.",
+    "capabilityNote": "Ask Macy's discovery assistant is live; no third-party checkout verified and the UCP endorsement is unverified, so graded on available discovery capability.",
     "depth": "A",
     "depthNote": "Generalist depth at $21.68B.",
     "overall": "B-",
-    "overallNote": "Browse-only access plus strong depth; 60/40 blend lands at B- (provisional).",
-    "overallProvisional": true,
+    "overallNote": "Discovery-only access plus strong depth; 60/40 blend lands at B-.",
     "platformAgent": "partial",
     "platformAgentNote": "Ask Macy's (launched March 2026, Gemini-based) does conversational product discovery, personalized recommendations, and virtual try-on; no evidence it adds to bag, reserves, or checks out. Conversational search, compare, and plan count as partial under the field definition.",
     "platformAgentSource": "https://www.retaildive.com/news/ask-macys-AI-conversational-shopping-assistant/815928/"
@@ -1579,13 +1572,12 @@ const BUSINESSES = [
     "verified": "2026-10-24",
     "sales": 12.39,
     "salesNote": "NRF Top 100 Retailers 2026 (Kantar), 2025 US retail sales",
-    "capability": "A+",
-    "capabilityNote": "Provisional: announced, live checkout unverified. Full-checkout target.",
+    "capability": "B+",
+    "capabilityNote": "ChatGPT plugin transfers bundles to the Ulta bag for site checkout (live cart handoff); claimed Google AI Mode checkout is unverified and not counted.",
     "depth": "A",
     "depthNote": "Specialist depth at $12.39B.",
-    "overall": "A+",
-    "overallNote": "Full agent checkout plus strong depth; 60/40 blend lands at A+ (provisional).",
-    "overallProvisional": true,
+    "overall": "A-",
+    "overallNote": "Live cart handoff plus strong depth; 60/40 blend lands at A-.",
     "platformAgent": "partial",
     "platformAgentNote": "Ulta AI, a proprietary assistant on Ulta.com (powered by Gemini Enterprise), helps guests discover, compare, and shop beauty; human still completes checkout on Ulta's site/app.",
     "platformAgentSource": "https://www.retailtechnology.co.uk/news/8671/ulta-beauty-get-ai-makeover/news/8653/puma-to-launch-ai-concierge/"
@@ -1794,13 +1786,12 @@ const BUSINESSES = [
     "verified": "2026-10-24",
     "sales": 8.81,
     "salesNote": "NRF Top 100 Retailers 2026 (Kantar), 2025 US retail sales",
-    "capability": "B+",
-    "capabilityNote": "Provisional: announced, live checkout unverified. Cart-assistant target.",
+    "capability": "D",
+    "capabilityNote": "Cart Assistant implementation reported Nov 2025 but no live cart channel verified, so graded on available capability (none).",
     "depth": "B",
     "depthNote": "Groceries catalog at $8.81B.",
-    "overall": "B+",
-    "overallNote": "Cart-building only plus moderate depth; 60/40 blend lands at B+ (provisional).",
-    "overallProvisional": true,
+    "overall": "C",
+    "overallNote": "No live agent channel plus moderate depth; 60/40 blend lands at C.",
     "platformAgent": "partial",
     "platformAgentNote": "Instacart's Cart Assistant, embedded on Sprouts' website/app, builds baskets via conversational meal planning, budgeting, and recommendations; human completes checkout.",
     "platformAgentSource": "https://www.grocerydive.com/news/kroger-sprouts-instacart-artificial-intelligence-grocery/804637/"
@@ -2145,13 +2136,12 @@ const BUSINESSES = [
     "verified": "2026-10-24",
     "sales": 6.37,
     "salesNote": "NRF Top 100 Retailers 2026 (Kantar), 2025 US retail sales",
-    "capability": "A+",
-    "capabilityNote": "Provisional: announced, live checkout unverified. Full-checkout target.",
+    "capability": "D",
+    "capabilityNote": "Copilot purchases claimed live in May 2026 trade press but described as still preparing in Aug 2026; no verified live channel, so graded on available capability (none).",
     "depth": "A",
     "depthNote": "Specialist depth at $6.37B.",
-    "overall": "A+",
-    "overallNote": "Full agent checkout plus strong depth; 60/40 blend lands at A+ (provisional).",
-    "overallProvisional": true,
+    "overall": "C+",
+    "overallNote": "No live agent channel plus strong depth; 60/40 blend lands at C+.",
     "platformAgent": "none",
     "platformAgentNote": "JD's agentic checkout runs inside third-party ChatGPT, Microsoft Copilot, and Google Gemini via commercetools/Stripe; under the hard rule this does not count, and no JD-owned assistant was found.",
     "platformAgentSource": "https://www.retail-systems.com/rs/Jp_sports_to_launch_products_on_major_ai_platforms.php"
@@ -2727,13 +2717,12 @@ const BUSINESSES = [
     "verified": "2026-10-24",
     "sales": 4.09,
     "salesNote": "NRF Top 100 Retailers 2026 (Kantar), 2025 US retail sales; figure is the Abercrombie & Fitch Co. total",
-    "capability": "A+",
-    "capabilityNote": "Provisional: announced, live checkout unverified. Full-checkout target.",
+    "capability": "D",
+    "capabilityNote": "Perplexity partnership kicking off Dec 2025; no live completed checkout verified, so graded on available capability (none).",
     "depth": "B",
     "depthNote": "Apparel catalog at $4.09B.",
-    "overall": "A-",
-    "overallNote": "Full agent checkout plus moderate depth; 60/40 blend lands at A- (provisional).",
-    "overallProvisional": true,
+    "overall": "C",
+    "overallNote": "No live agent channel plus moderate depth; 60/40 blend lands at C.",
     "platformAgent": "none",
     "platformAgentNote": "No first-party action-taking assistant found; the in-app AI stylist is recommendation-only, and its announced agentic channel is third-party Perplexity/PayPal/Cymbio checkout, which is excluded by the hard rule.",
     "platformAgentSource": "https://www.retail-systems.com/rs/Abercrombie_And_Fitch_Takes_Steps_To_Become_Purchasable_Via_AI_Chatbots.php"
