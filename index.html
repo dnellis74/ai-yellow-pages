@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent Yellow Pages — Businesses That Let AI Agents Shop</title>
+<meta name="description" content="A directory of businesses by AI agent policy: which let agents browse, check out, or are blocked, with evidence and last-verified dates.">
+<style>
+  :root { --ink:#1a1a1a; --mut:#666; --line:#ddd; --green:#1a7f37; --red:#c0392b; --amber:#9a6b00; --blue:#2456a6; --grey:#666; }
+  * { box-sizing:border-box; }
+  body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; color:var(--ink); max-width:960px; margin:0 auto; padding:24px 16px 64px; line-height:1.5; }
+  h1 { font-size:1.8rem; margin:0 0 4px; }
+  p.sub { color:var(--mut); margin:0 0 20px; }
+  .controls { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px; }
+  .controls input[type=search] { flex:1 1 220px; padding:8px 10px; font-size:1rem; border:1px solid var(--line); border-radius:6px; }
+  .controls select { padding:8px 10px; font-size:1rem; border:1px solid var(--line); border-radius:6px; background:#fff; }
+  #count { color:var(--mut); margin:0 0 16px; }
+  .card { border:1px solid var(--line); border-radius:10px; padding:16px; margin-bottom:12px; }
+  .card h2 { font-size:1.15rem; margin:0 0 4px; }
+  .card h2 a { color:var(--ink); text-decoration:none; }
+  .card h2 a:hover { text-decoration:underline; }
+  .badge { display:inline-block; font-size:.8rem; font-weight:600; padding:2px 8px; border-radius:999px; margin-right:6px; vertical-align:middle; }
+  .checkout { background:#e6f4ea; color:var(--green); }
+  .announced { background:#f3e8fd; color:#6b21a8; }
+  .onboarding { background:#e0f2f1; color:#00695c; }
+  .browse { background:#e8f0fe; color:var(--blue); }
+  .limited { background:#fef7e0; color:var(--amber); }
+  .blocked { background:#fce8e6; color:var(--red); }
+  .unknown { background:#f1f3f4; color:var(--grey); }
+  .defunct { background:#1a1a1a; color:#fff; }
+  .defunct-notice { background:#1a1a1a; color:#fff; border-radius:10px; padding:12px 16px; font-size:1rem; }
+  .cat { color:var(--mut); font-size:.9rem; }
+  .channels { margin:8px 0; }
+  .channels span { display:inline-block; background:#f1f3f4; border-radius:4px; padding:1px 7px; font-size:.85rem; margin:0 4px 4px 0; }
+  .evidence { font-size:.95rem; margin:6px 0; }
+  .sales { font-size:.9rem; margin:6px 0; }
+  .salesnote { color:var(--mut); font-size:.85rem; }
+  .grade { display:inline-block; font-size:.8rem; font-weight:700; padding:2px 8px; border-radius:999px; margin-right:6px; vertical-align:middle; background:#1a1a1a; color:#fff; }
+  .gradenote { font-size:.9rem; margin:6px 0; }
+  .meta { font-size:.85rem; color:var(--mut); }
+  .meta a { color:var(--mut); }
+  .card[role="link"] { cursor:pointer; }
+  .card[role="link"]:hover { border-color:#999; }
+  .card[role="link"]:focus-visible { outline:2px solid var(--blue); outline-offset:2px; }
+  .backlink { font-size:.95rem; }
+  .detail h2 { font-size:1.5rem; margin:0 0 8px; }
+  .detail .grades { margin:12px 0; }
+  .detail .grades p { margin:6px 0; }
+  footer { margin-top:32px; border-top:1px solid var(--line); padding-top:16px; font-size:.85rem; color:var(--mut); }
+  footer a { color:var(--mut); }
+</style>
+</head>
+<body>
+<h1>Agent Yellow Pages</h1>
+<p class="sub">Which businesses let AI agents browse, check out, or are blocked, with the evidence and the date each entry was last checked. Policies change fast; check the source before you rely on an entry.</p>
+
+<div class="controls" id="controls">
+  <input type="search" id="q" placeholder="Search businesses…" aria-label="Search businesses">
+  <select id="status" aria-label="Filter by status">
+    <option value="">All statuses</option>
+    <option value="checkout">Checkout allowed</option>
+    <option value="announced">Announced, not live</option>
+    <option value="onboarding">Onboarding, not live</option>
+    <option value="browse">Browse only</option>
+    <option value="limited">Limited</option>
+    <option value="blocked">Blocked</option>
+    <option value="unknown">No public policy</option>
+  </select>
+  <select id="category" aria-label="Filter by category">
+    <option value="">All categories</option>
+  </select>
+  <select id="sort" aria-label="Sort listings">
+    <option value="size">Sort: largest first</option>
+    <option value="name">Sort: name A–Z</option>
+    <option value="status">Sort: status</option>
+    <option value="capability">Sort: capability</option>
+    <option value="depth">Sort: depth</option>
+    <option value="overall">Sort: overall</option>
+  </select>
+</div>
+
+<p id="count"></p>
+<div id="list"></div>
+<div id="detail" hidden></div>
+
+<footer>
+  <p>Outbound links may be affiliate links: if you buy through one, this site may earn a commission at no extra cost to you. Status labels describe third-party AI agent access, not a business's own in-app assistant. Each card shows three grades: Capability (what an agent can actually do, pure automation), Depth (depth of products offered, shoppable online), and Overall (60% capability + 40% depth); provisional grades mark announced or onboarding integrations whose target grade is not yet live, and — means ungraded, not failing. See <code>data.js</code> for the full rubric.</p>
+  <p>Data file: <code>data.js</code> — every listing on this page renders from that one file. Click any card for a detail page with the full evidence, channels, grade notes, and sources; detail pages have shareable links like <code>#/business/walmart</code>.</p>
+</footer>
+
+<script src="data.js"></script>
+<script>
+const STATUS_LABEL = { checkout:"Checkout allowed", announced:"Announced, not live", onboarding:"Onboarding, not live", browse:"Browse only", limited:"Limited", blocked:"Blocked", unknown:"No public policy" };
+const CAPABILITY_ORDER = { "A+":0, "B+":1, "B":2, "C-":3, "D":4, "F":5, "—":6 };
+const DEPTH_ORDER = { "A+":0, "A":1, "B":2, "C":3, "D":4, "F":5, "—":6 };
+const OVERALL_ORDER = { "A+":0, "A":1, "A-":2, "B+":3, "B":4, "B-":5, "C+":6, "C":7, "C-":8, "D":9, "F":10, "—":11 };
+function gradeSort(order, key, provKey) {
+  return (a, b) => order[a[key]] - order[b[key]] || (a[provKey] ? 1 : 0) - (b[provKey] ? 1 : 0) || (b.sales ?? -1) - (a.sales ?? -1) || a.name.localeCompare(b.name);
+}
+function provLabel(b) { return b.status === "onboarding" ? "onboarding" : "announced"; }
+function gradeBadge(label, grade, b) {
+  if (grade === "—") return label + " — ungraded";
+  // Depth is never provisional; only Capability and Overall carry the marker.
+  return (label !== "Depth" && b.overallProvisional) ? label + " " + grade + " · " + provLabel(b) : label + " " + grade;
+}
+
+const listEl = document.getElementById("list");
+const countEl = document.getElementById("count");
+const qEl = document.getElementById("q");
+const statusEl = document.getElementById("status");
+const catEl = document.getElementById("category");
+const sortEl = document.getElementById("sort");
+const controlsEl = document.getElementById("controls");
+const detailEl = document.getElementById("detail");
+const PAGE_TITLE = document.title;
+
+// Deep-link slugs, one per business. First occurrence keeps the base slug;
+// a later collision gets a numeric suffix, so every slug resolves to one entry.
+function slugify(name) { return name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") || "business"; }
+const SLUG_TO_BUSINESS = {};
+BUSINESSES.forEach(b => {
+  let slug = slugify(b.name);
+  let unique = slug, i = 2;
+  while (SLUG_TO_BUSINESS[unique]) unique = slug + "-" + (i++);
+  SLUG_TO_BUSINESS[unique] = b;
+  b._slug = unique;
+});
+function domainOf(url) { try { return new URL(url).hostname.replace(/^www\./, ""); } catch (e) { return url; } }
+
+[...new Set(BUSINESSES.map(b => b.category))].sort().forEach(c => {
+  const o = document.createElement("option");
+  o.value = c; o.textContent = c;
+  catEl.appendChild(o);
+});
+
+function render() {
+  const q = qEl.value.trim().toLowerCase();
+  const st = statusEl.value;
+  const cat = catEl.value;
+  const rows = BUSINESSES.filter(b =>
+    (!st || b.status === st) &&
+    (!cat || b.category === cat) &&
+    (!q || (b.name + " " + b.category + " " + b.evidence + " " + b.channels.join(" ") + " " + b.capabilityNote + " " + b.depthNote + " " + b.overallNote).toLowerCase().includes(q))
+  );
+  if (sortEl.value === "name") rows.sort((a, b) => a.name.localeCompare(b.name));
+  else if (sortEl.value === "status") rows.sort((a, b) => a.status.localeCompare(b.status) || a.name.localeCompare(b.name));
+  else if (sortEl.value === "capability") rows.sort(gradeSort(CAPABILITY_ORDER, "capability", "overallProvisional"));
+  else if (sortEl.value === "depth") rows.sort(gradeSort(DEPTH_ORDER, "depth", "overallProvisional"));
+  else if (sortEl.value === "overall") rows.sort(gradeSort(OVERALL_ORDER, "overall", "overallProvisional"));
+  else rows.sort((a, b) => (b.sales ?? -1) - (a.sales ?? -1) || a.name.localeCompare(b.name));
+  countEl.textContent = rows.length + " of " + BUSINESSES.length + " businesses";
+  listEl.innerHTML = rows.map(b => `
+    <article class="card" role="link" tabindex="0" data-slug="${b._slug}" aria-label="View details for ${b.name}">
+      <h2>${b.name}</h2>
+      <p><span class="grade">${gradeBadge("Capability", b.capability, b)}</span> <span class="grade">${gradeBadge("Depth", b.depth, b)}</span> <span class="grade">${gradeBadge("Overall", b.overall, b)}</span> <span class="badge ${b.status}">${STATUS_LABEL[b.status]}</span>${b.defunct ? ` <span class="badge defunct">Defunct</span>` : ""} <span class="cat">${b.category}</span></p>
+      <p class="sales">${b.sales == null ? "Annual sales: not reported" : "Annual sales: $" + b.sales.toFixed(2) + "B"}</p>
+    </article>`).join("") || "<p>No businesses match those filters.</p>";
+}
+
+function showDetail(b) {
+  controlsEl.hidden = true;
+  countEl.hidden = true;
+  listEl.hidden = true;
+  detailEl.hidden = false;
+  document.title = b.name + " — Agent Yellow Pages";
+  detailEl.innerHTML = `
+    <p class="backlink"><a href="#">← Back to listings</a></p>
+    <article class="detail">
+      ${b.defunct ? `<p class="defunct-notice"><strong>Defunct:</strong> This airline ceased all flight operations on May 2, 2026 and cannot be booked.</p>` : ""}
+      <h2>${b.name}</h2>
+      <p><a href="${b.url}" rel="sponsored">${domainOf(b.url)}</a> · <span class="badge ${b.status}">${STATUS_LABEL[b.status]}</span> <span class="cat">${b.category}</span></p>
+      <p class="sales">${b.sales == null ? "Annual sales: not reported" : "Annual sales: $" + b.sales.toFixed(2) + "B"}${b.salesNote ? ` <span class="salesnote">${b.salesNote}</span>` : ""}</p>
+      <div class="grades">
+        <p><span class="grade">${gradeBadge("Capability", b.capability, b)}</span> ${b.capabilityNote}</p>
+        <p><span class="grade">${gradeBadge("Depth", b.depth, b)}</span> ${b.depthNote}</p>
+        <p><span class="grade">${gradeBadge("Overall", b.overall, b)}</span> ${b.overallNote}</p>
+      </div>
+      ${b.channels.length ? `<p class="channels">${b.channels.map(c => `<span>${c}</span>`).join("")}</p>` : ""}
+      <p class="evidence">${b.evidence}</p>
+      <p class="meta">Last verified ${b.verified} · <a href="${b.source}">Source</a></p>
+    </article>`;
+  window.scrollTo(0, 0);
+}
+
+function showListings() {
+  detailEl.hidden = true;
+  controlsEl.hidden = false;
+  countEl.hidden = false;
+  listEl.hidden = false;
+  document.title = PAGE_TITLE;
+  render();
+}
+
+// Hash routing: #/business/<slug>. Filter/sort/search state lives in the
+// controls and is never reset, so going back restores the previous listings.
+function route() {
+  const m = location.hash.match(/^#\/business\/([a-z0-9-]+)$/);
+  if (!m) { showListings(); return; }
+  const b = SLUG_TO_BUSINESS[m[1]];
+  if (!b) {
+    showListings();
+    try { history.replaceState(null, "", location.pathname + location.search); } catch (e) {}
+    return;
+  }
+  showDetail(b);
+}
+
+function openCard(card) {
+  if (card) location.hash = "#/business/" + card.dataset.slug;
+}
+listEl.addEventListener("click", e => { const card = e.target.closest(".card"); openCard(card); });
+listEl.addEventListener("keydown", e => {
+  if (e.key !== "Enter" && e.key !== " ") return;
+  const card = e.target.closest(".card");
+  if (card) { e.preventDefault(); openCard(card); }
+});
+
+qEl.addEventListener("input", render);
+statusEl.addEventListener("change", render);
+catEl.addEventListener("change", render);
+sortEl.addEventListener("change", render);
+window.addEventListener("hashchange", route);
+route();
+</script>
+</body>
+</html>
