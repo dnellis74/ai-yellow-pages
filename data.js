@@ -150,9 +150,9 @@ const BUSINESSES = [
       "UCP"
     ],
     "url": "https://www.chewy.com/",
-    "evidence": "Live UCP profile (2026-01-23 spec) with checkout, fulfillment, and order capabilities and a production Google Pay handler. Selective browsing-agent blocks reported by Billions Network/WSJ Oct 2026 could not be re-verified in this pass.",
+    "evidence": "Live UCP profile (2026-01-23 spec, re-checked 2026-10-29) with checkout, fulfillment, and order capabilities and a production Google Pay handler. First-hand limit, Oct 28-29, 2026: a third-party browser agent signing in as the account holder was rate-limited at sign-in (HTTP 429) on three attempts across two days and never reached checkout; the account holder then ordered directly on chewy.com. The UCP machine channel stands, but the browser-agent-as-user path is throttled at sign-in. Selective browsing-agent blocks reported by Billions Network/WSJ Oct 2026 remain unverified here.",
     "source": "https://chewy.com/.well-known/ucp",
-    "verified": "2026-10-24",
+    "verified": "2026-10-29",
     "sales": 12.6,
     "salesNote": "NRF Top 100 Retailers 2026 (Kantar), 2025 US retail sales",
     "capability": "A+",

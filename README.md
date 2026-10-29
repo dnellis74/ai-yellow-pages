@@ -226,6 +226,22 @@ not by what it is called:
 
 ## Verification history
 
+- 2026-10-29 — Chewy first-hand agent-checkout attempt (Oct 28-29).
+  A third-party browser agent (Muse) signing in as the account holder
+  tried to place a real order (Nacho variety case + Halo variety case,
+  6-month Autoship) and was rate-limited at sign-in (HTTP 429) on three
+  attempts across two days (Oct 28 evening, Oct 29 8:07 AM MDT); no
+  cart, checkout, or payment was ever reached, and the run stopped
+  rather than hammering retries. The account holder then ordered
+  directly on chewy.com. Chewy's UCP profile was re-checked live the
+  same day and still advertises checkout, fulfillment, and order
+  capabilities with a production Google Pay handler, so the entry
+  keeps status checkout and capability A+: the grades rest on the
+  UCP machine channel, while the evidence now records that the
+  browser-agent-as-user path is throttled at sign-in. Grades and
+  directory counts unchanged; only the evidence text and verified
+  date (2026-10-29) moved.
+
 - 2026-10-26 — Category expansion, checked pass (22 entries, 129 → 151).
   Method: check-access.js deterministic pass (robots.txt named-agent
   rules, UCP, llms.txt) plus one announcement-search round per group,
