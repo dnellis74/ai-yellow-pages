@@ -4,7 +4,7 @@
 // Fields per entry:
 //   name: display name
 //   category: General, Electronics, Apparel, Beauty, Home, Marketplace, Groceries, Platform, Pet supplies
-//     (plus Pharmacy, Telecom, Sporting goods, Convenience, Auto, Jewelry, Office, Crafts, Alcohol, Fuel, and others added with the NRF merge; Airlines added 2026-10-25; Hotels, OTAs, Rental cars, Food delivery, Restaurants, Tickets, Entertainment, Rides, Home services, Pet services added 2026-10-26)
+//     (plus Pharmacy, Telecom, Sporting goods, Convenience, Auto, Jewelry, Office, Crafts, Alcohol, Fuel, and others added with the NRF merge; Airlines added 2026-10-25; Hotels, OTAs, Rental cars, Food delivery, Restaurants, Tickets, Entertainment, Rides, Home services, Pet services added 2026-10-26; Mail added 2026-11-02)
 //   status: "checkout" | "announced" | "onboarding" | "browse" | "limited" | "blocked" | "unknown"
 //     checkout   = a third-party agent can complete a purchase (verified live)
 //     announced  = an agent integration has been announced but live checkout is not verified
@@ -3457,6 +3457,245 @@ const BUSINESSES = [
     "depthNote": "No depth assessment made in this scoped pass.",
     "overall": "—",
     "overallNote": "Ungraded overall because depth is ungraded; capability alone does not produce an overall.",
+    "platformAgent": "unknown",
+    "platformAgentNote": "Not yet checked for a first-party agent."
+  },
+  {
+    "name": "LetterStream",
+    "category": "Mail",
+    "status": "limited",
+    "channels": [
+      "LetterStream API"
+    ],
+    "url": "https://www.letterstream.com/",
+    "evidence": "API lets approved customers submit mailings (PDF + recipient CSV) from their own software; First-Class, Certified, FedEx 2Day, postcards, Registered, flats. Not enabled by default: approval unlocks docs and test access; docs and auth are not public. First-hand website letter sent with agent help Sept 30, 2026; the API path is gated, not self-serve.",
+    "source": "https://www.letterstream.com/api/",
+    "verified": "2026-11-02",
+    "sales": null,
+    "salesNote": "Single-service catalog; no revenue figure used.",
+    "capability": "B",
+    "capabilityNote": "Agent mailing via API after one-time approval; docs and auth gated.",
+    "depth": "C",
+    "depthNote": "Single-service mail catalog.",
+    "overall": "B-",
+    "overallNote": "Gated agent API plus narrow depth; 60/40 blend lands at B-.",
+    "platformAgent": "unknown",
+    "platformAgentNote": "Not yet checked for a first-party agent."
+  },
+  {
+    "name": "Lob",
+    "category": "Mail",
+    "status": "checkout",
+    "channels": [
+      "Lob API"
+    ],
+    "url": "https://www.lob.com/",
+    "evidence": "REST API with HTTP Basic auth (API key as username, blank password); test and live keys. POST letters, postcards, checks; pre-production cancellation; live keys print and mail for real, postage included per piece.",
+    "source": "https://docs.lob.com/",
+    "verified": "2026-11-02",
+    "sales": null,
+    "salesNote": "Single-service catalog; no revenue figure used.",
+    "capability": "A+",
+    "capabilityNote": "Full agent mailing via API: letters, postcards, checks.",
+    "depth": "C",
+    "depthNote": "Single-service mail catalog.",
+    "overall": "B+",
+    "overallNote": "Full agent task completion plus narrow depth; 60/40 blend lands at B+.",
+    "platformAgent": "unknown",
+    "platformAgentNote": "Not yet checked for a first-party agent."
+  },
+  {
+    "name": "PostGrid",
+    "category": "Mail",
+    "status": "checkout",
+    "channels": [
+      "PostGrid API"
+    ],
+    "url": "https://www.postgrid.com/",
+    "evidence": "REST API, x-api-key header, test and live keys; letters, postcards, self-mailers, cheques from HTML or PDF; per-piece all-in billing (printing, processing, postage bundled); orders cancellable while status ready.",
+    "source": "https://docs.postgrid.com/",
+    "verified": "2026-11-02",
+    "sales": null,
+    "salesNote": "Single-service catalog; no revenue figure used.",
+    "capability": "A+",
+    "capabilityNote": "Full agent mailing via API: letters, postcards, cheques.",
+    "depth": "C",
+    "depthNote": "Single-service mail catalog.",
+    "overall": "B+",
+    "overallNote": "Full agent task completion plus narrow depth; 60/40 blend lands at B+.",
+    "platformAgent": "unknown",
+    "platformAgentNote": "Not yet checked for a first-party agent."
+  },
+  {
+    "name": "Click2Mail",
+    "category": "Mail",
+    "status": "checkout",
+    "channels": [
+      "Click2Mail API"
+    ],
+    "url": "https://www.click2mail.com/",
+    "evidence": "REST/Batch APIs (no API key; account credentials) plus staging environment; create document, create job, submit; letters, postcards, certified mail, flyers, brochures; prepaid credit balance funds jobs, separate from API calls.",
+    "source": "https://developers.click2mail.com/",
+    "verified": "2026-11-02",
+    "sales": null,
+    "salesNote": "Single-service catalog; no revenue figure used.",
+    "capability": "A+",
+    "capabilityNote": "Full agent mailing via API: letters, postcards, certified mail.",
+    "depth": "C",
+    "depthNote": "Single-service mail catalog.",
+    "overall": "B+",
+    "overallNote": "Full agent task completion plus narrow depth; 60/40 blend lands at B+.",
+    "platformAgent": "unknown",
+    "platformAgentNote": "Not yet checked for a first-party agent."
+  },
+  {
+    "name": "Printful",
+    "category": "Platform",
+    "status": "checkout",
+    "channels": [
+      "Printful API"
+    ],
+    "url": "https://www.printful.com/",
+    "evidence": "REST API, OAuth 2.0 private tokens (Bearer) with scopes; create orders (recipient + catalog variant + design placements), confirm for fulfillment; card on file charged on fulfillment; tracking via API/webhooks.",
+    "source": "https://developers.printful.com/docs/",
+    "verified": "2026-11-02",
+    "sales": null,
+    "capability": "A+",
+    "capabilityNote": "Full agent POD order via API: print, pack, ship.",
+    "depth": "A",
+    "depthNote": "POD platform; merchant breadth.",
+    "overall": "A+",
+    "overallNote": "Full agent task completion plus platform depth; 60/40 blend lands at A+.",
+    "platformAgent": "unknown",
+    "platformAgentNote": "Not yet checked for a first-party agent."
+  },
+  {
+    "name": "Printify",
+    "category": "Platform",
+    "status": "checkout",
+    "channels": [
+      "Printify API"
+    ],
+    "url": "https://printify.com/",
+    "evidence": "REST API v1, Personal Access Token (1 year) or OAuth 2.0, Bearer + User-Agent header; create products from blueprints, submit orders through an API shop; production cost charged to shop card on submit; seller collects customer payment separately.",
+    "source": "https://developers.printify.com/",
+    "verified": "2026-11-02",
+    "sales": null,
+    "capability": "A+",
+    "capabilityNote": "Full agent POD order via API: print and ship; customer payment collected separately.",
+    "depth": "A",
+    "depthNote": "POD platform; merchant breadth.",
+    "overall": "A+",
+    "overallNote": "Full agent task completion plus platform depth; 60/40 blend lands at A+.",
+    "platformAgent": "unknown",
+    "platformAgentNote": "Not yet checked for a first-party agent."
+  },
+  {
+    "name": "Gelato",
+    "category": "Platform",
+    "status": "checkout",
+    "channels": [
+      "Gelato API"
+    ],
+    "url": "https://www.gelato.com/",
+    "evidence": "Orders API (v4), X-API-KEY header; create order with product UID, print files by URL, quantity, shipment; charged at creation (wallet, card on file, or invoice); draft mode validates without charging or producing.",
+    "source": "https://dashboard.gelato.com/docs/",
+    "verified": "2026-11-02",
+    "sales": null,
+    "capability": "A+",
+    "capabilityNote": "Full agent POD order via API: print and ship.",
+    "depth": "A",
+    "depthNote": "POD platform; merchant breadth.",
+    "overall": "A+",
+    "overallNote": "Full agent task completion plus platform depth; 60/40 blend lands at A+.",
+    "platformAgent": "unknown",
+    "platformAgentNote": "Not yet checked for a first-party agent."
+  },
+  {
+    "name": "Shippo",
+    "category": "Office",
+    "status": "checkout",
+    "channels": [
+      "Shippo API"
+    ],
+    "url": "https://goshippo.com/",
+    "evidence": "Multi-carrier REST API (40+ carriers), token auth with test/live keys; shipments return rates, transactions purchase labels with label URL and tracking; pay-per-label billing to card on file; docs note a hosted MCP server for AI agents.",
+    "source": "https://docs.goshippo.com/",
+    "verified": "2026-11-02",
+    "sales": null,
+    "salesNote": "Single-service catalog; no revenue figure used.",
+    "capability": "A+",
+    "capabilityNote": "Full agent label purchase via API: rates, label, tracking.",
+    "depth": "C",
+    "depthNote": "Single-service shipping catalog.",
+    "overall": "B+",
+    "overallNote": "Full agent task completion plus narrow depth; 60/40 blend lands at B+.",
+    "platformAgent": "unknown",
+    "platformAgentNote": "Not yet checked for a first-party agent."
+  },
+  {
+    "name": "EasyPost",
+    "category": "Office",
+    "status": "checkout",
+    "channels": [
+      "EasyPost API"
+    ],
+    "url": "https://www.easypost.com/",
+    "evidence": "Multi-carrier REST API, API key via HTTP Basic auth, test and production keys; create shipment, buy a rate for label URL and tracking; postage billed to account; refund/void available.",
+    "source": "https://docs.easypost.com/",
+    "verified": "2026-11-02",
+    "sales": null,
+    "salesNote": "Single-service catalog; no revenue figure used.",
+    "capability": "A+",
+    "capabilityNote": "Full agent label purchase via API: rates, label, tracking.",
+    "depth": "C",
+    "depthNote": "Single-service shipping catalog.",
+    "overall": "B+",
+    "overallNote": "Full agent task completion plus narrow depth; 60/40 blend lands at B+.",
+    "platformAgent": "unknown",
+    "platformAgentNote": "Not yet checked for a first-party agent."
+  },
+  {
+    "name": "Phaxio",
+    "category": "Office",
+    "status": "checkout",
+    "channels": [
+      "Phaxio API"
+    ],
+    "url": "https://www.phaxio.com/",
+    "evidence": "Fax API v2.1, API key + secret via HTTP Basic auth; POST faxes with file or content URL sends a real fax; pay-per-use from 7c/page; test keys for staging.",
+    "source": "https://www.phaxio.com/docs/api/v2.1/faxes/create_and_send_fax",
+    "verified": "2026-11-02",
+    "sales": null,
+    "salesNote": "Single-service catalog; no revenue figure used.",
+    "capability": "A+",
+    "capabilityNote": "Full agent fax sending via API.",
+    "depth": "C",
+    "depthNote": "Single-service fax catalog.",
+    "overall": "B+",
+    "overallNote": "Full agent task completion plus narrow depth; 60/40 blend lands at B+.",
+    "platformAgent": "unknown",
+    "platformAgentNote": "Not yet checked for a first-party agent."
+  },
+  {
+    "name": "DocuSign",
+    "category": "Office",
+    "status": "checkout",
+    "channels": [
+      "DocuSign eSignature API"
+    ],
+    "url": "https://www.docusign.com/",
+    "evidence": "eSignature REST API v2.1, OAuth 2.0 (JWT server-to-server after one-time browser consent, or Auth Code); envelopes sent, tracked, completed documents retrievable; developer sandbox free but not legally valid; production sending needs a Developer API plan from $50/month billed yearly. Developer Center also offers an MCP server for AI agents.",
+    "source": "https://developers.docusign.com/",
+    "verified": "2026-11-02",
+    "sales": null,
+    "salesNote": "Single-service catalog; no revenue figure used.",
+    "capability": "A+",
+    "capabilityNote": "Full agent envelope sending via API; production needs a paid Developer API plan.",
+    "depth": "C",
+    "depthNote": "Single-service signature catalog.",
+    "overall": "B+",
+    "overallNote": "Full agent task completion plus narrow depth; 60/40 blend lands at B+.",
     "platformAgent": "unknown",
     "platformAgentNote": "Not yet checked for a first-party agent."
   }

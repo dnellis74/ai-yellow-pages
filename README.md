@@ -233,6 +233,18 @@ not by what it is called:
 
 ## Verification history
 
+- 2026-11-02 (specialty task APIs added): 11 entries added from live API
+  docs checks: LetterStream, Lob, PostGrid, Click2Mail (mail); Printful,
+  Printify, Gelato (print on demand); Shippo, EasyPost (shipping labels);
+  Phaxio (fax); DocuSign (e-signature). All rest on public API docs
+  verified Nov 2. LetterStream grades B/limited: its API is approval-gated
+  with non-public docs and auth, not self-serve. The other ten grade
+  capability A+ with self-serve APIs; POD platforms take depth A (platform
+  breadth), the rest depth C (single-service catalogs). Directory now 162
+  entries: capability A+ 14, B+ 30, B 25, C- 32, D 17, F 6, ungraded 38;
+  overall A+ 6, A- 16, B+ 27, B 3, B- 31, C+ 18, C 7, C- 1, ungraded 53.
+  Portable copy rebuilt.
+
 - 2026-11-02 (single-surface checkout downgrade; default sort overall):
   full checkout available only through one provider's agent surface
   (Gemini-only UCP, or Shopify Agentic Storefronts selling only in
