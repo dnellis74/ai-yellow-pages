@@ -24,8 +24,9 @@
 //     salesNote. Platforms get no figure by design (null, no salesNote).
 //   salesNote: what the sales figure covers and where it came from; omitted
 //     when there is no figure and nothing to explain (platforms).
-// Sales figures are for sorting and scale context only; they are not a
-// quality signal. Nulls sort last in the default size sort.
+// Sales figures are for scale context only; they are not a
+// quality signal. Nulls sort last in the size sort. The default sort
+// is overall grade.
 //   capability: what an agent can actually do, pure automation, no depth adjustment:
 //     "A+" | "B+" | "B" | "C-" | "D" | "F" | "—"
 //   capabilityNote: one line: what the agent can do
@@ -89,6 +90,13 @@
 //     Human-app-only presence does not count; announced-only platform
 //     features do not count; retired channels (in-chat ACP checkout,
 //     retired March 2026) never count.
+//   Single-provider agent surface (2026-11-02): full checkout
+//     available only through one provider's agent (Gemini-only UCP,
+//     or Shopify Agentic Storefronts selling only in Google AI Mode /
+//     Gemini) grades B, not A+. A+ requires checkout reachable by
+//     agents generally, not one provider's surface alone. Status
+//     stays checkout, since a third-party agent can complete a
+//     purchase through that surface.
 //   Conversion from the previous single grade (verified, not blindly copied):
 //     old verified A-band (A+, A, A-) were all checkout entries -> A+;
 //     old B+ -> B+; old B -> B; old C- -> C-; old D -> D; old F -> F;
@@ -155,12 +163,12 @@ const BUSINESSES = [
     "verified": "2026-10-29",
     "sales": 12.6,
     "salesNote": "NRF Top 100 Retailers 2026 (Kantar), 2025 US retail sales",
-    "capability": "A+",
-    "capabilityNote": "Full agent checkout via UCP.",
+    "capability": "B",
+    "capabilityNote": "Full agent checkout via UCP, Google surfaces only.",
     "depth": "A",
     "depthNote": "Specialist depth at $12.60B.",
-    "overall": "A+",
-    "overallNote": "Full agent checkout plus strong depth; 60/40 blend lands at A+.",
+    "overall": "B+",
+    "overallNote": "Single-surface agent checkout plus strong depth; 60/40 blend lands at B+.",
     "platformAgent": "partial",
     "platformAgentNote": "Cai (Chewy AI) in the mobile app resolves common orders, returns and account-membership issues in chat (about one-third of those cases in beta); shopping/discovery agents were still in development, and no Cai purchase completion was evidenced.",
     "platformAgentSource": "https://www.customerexperiencedive.com/news/chewy-beta-ai-assistant-solving-common-customer-issues/829948/"
@@ -362,12 +370,12 @@ const BUSINESSES = [
     "verified": "2026-10-24",
     "sales": 102.72,
     "salesNote": "NRF Top 100 Retailers 2026 (Kantar), 2025 US retail sales",
-    "capability": "A+",
-    "capabilityNote": "Full agent checkout via UCP.",
+    "capability": "B",
+    "capabilityNote": "Full agent checkout via UCP, Google surfaces only.",
     "depth": "A+",
     "depthNote": "General breadth at $102.72B.",
-    "overall": "A+",
-    "overallNote": "Full agent checkout plus deepest catalog; 60/40 blend lands at A+.",
+    "overall": "A-",
+    "overallNote": "Single-surface agent checkout plus deepest catalog; 60/40 blend lands at A-.",
     "platformAgent": "partial",
     "platformAgentNote": "List Scanner in the Target app scans handwritten/wish lists and adds the items to the cart; the Shopping Assistant itself only answers product questions and recommends.",
     "platformAgentSource": "https://corporate.target.com/press/release/2025/11/target-launches-new-ai-powered-features-to-make-holiday-shopping-easier,-smarter-and-more-fun"
@@ -430,12 +438,12 @@ const BUSINESSES = [
     "verified": "2026-10-24",
     "sales": 10.97,
     "salesNote": "NRF Top 100 Retailers 2026 (Kantar), 2025 US retail sales",
-    "capability": "A+",
-    "capabilityNote": "Full agent checkout via UCP.",
+    "capability": "B",
+    "capabilityNote": "Full agent checkout via UCP, Google surfaces only.",
     "depth": "A",
     "depthNote": "Specialist depth at $10.97B.",
-    "overall": "A+",
-    "overallNote": "Full agent checkout plus strong depth; 60/40 blend lands at A+.",
+    "overall": "B+",
+    "overallNote": "Single-surface agent checkout plus strong depth; 60/40 blend lands at B+.",
     "platformAgent": "partial",
     "platformAgentNote": "Muse is a genAI visual discovery tool that surfaces shoppable recommendations and lets shoppers add items to collections to revisit; human buys on Wayfair.",
     "platformAgentSource": "https://www.digitalcommerce360.com/2025/02/11/wayfair-debuts-muse-ai-powered-search-discovery-tool/"
@@ -498,12 +506,12 @@ const BUSINESSES = [
     "verified": "2026-10-24",
     "sales": null,
     "salesNote": "no credible reported revenue figure found, Oct 2026 check",
-    "capability": "A+",
-    "capabilityNote": "Full agent checkout via UCP, Shopify Agentic Storefronts.",
+    "capability": "B",
+    "capabilityNote": "Full agent checkout via UCP and Shopify Agentic Storefronts, Google surfaces only.",
     "depth": "C",
     "depthNote": "Single-brand Beauty catalog with no reported sales figure.",
-    "overall": "B+",
-    "overallNote": "Full agent checkout plus narrow depth; 60/40 blend lands at B+.",
+    "overall": "B-",
+    "overallNote": "Single-surface agent checkout plus narrow depth; 60/40 blend lands at B-.",
     "platformAgent": "none",
     "platformAgentNote": "No first-party shopping agent found; only a support chatbot reference (sentiment-flagging/escalation) and third-party ChatGPT shoppability.",
     "platformAgentSource": "https://sitebot.co/blog/gen-z-millennial-shopping-habits-retail-chatbot-design"
@@ -521,12 +529,12 @@ const BUSINESSES = [
     "verified": "2026-10-24",
     "sales": null,
     "salesNote": "reported nearly $1B, 2025; no exact figure disclosed",
-    "capability": "A+",
-    "capabilityNote": "Full agent checkout via Shopify Agentic Storefronts.",
+    "capability": "B",
+    "capabilityNote": "Full agent checkout via Shopify Agentic Storefronts, Google surfaces only.",
     "depth": "C",
     "depthNote": "Single-brand apparel catalog; reported nearly $1B in 2025, no exact figure.",
-    "overall": "B+",
-    "overallNote": "Full agent checkout plus narrow depth; 60/40 blend lands at B+.",
+    "overall": "B-",
+    "overallNote": "Single-surface agent checkout plus narrow depth; 60/40 blend lands at B-.",
     "platformAgent": "none",
     "platformAgentNote": "Kustomer-based AI agents automate ~40% of chat conversations by solving customer queries with human handoff; no specific cart, order, return, or purchase action evidenced, so this counts as support Q&A only.",
     "platformAgentSource": "https://consumergoods.com/vuori-deploys-ai-agents-optimized-customer-care"
@@ -545,12 +553,12 @@ const BUSINESSES = [
     "verified": "2026-10-24",
     "sales": null,
     "salesNote": "no credible reported revenue figure found, Oct 2026 check",
-    "capability": "A+",
-    "capabilityNote": "Full agent checkout via UCP, Shopify Agentic Storefronts.",
+    "capability": "B",
+    "capabilityNote": "Full agent checkout via UCP and Shopify Agentic Storefronts, Google surfaces only.",
     "depth": "C",
     "depthNote": "Single-brand Apparel catalog with no reported sales figure.",
-    "overall": "B+",
-    "overallNote": "Full agent checkout plus narrow depth; 60/40 blend lands at B+.",
+    "overall": "B-",
+    "overallNote": "Single-surface agent checkout plus narrow depth; 60/40 blend lands at B-.",
     "platformAgent": "none",
     "platformAgentNote": "No first-party shopper assistant found; Spanx's agent presence in sources is third-party ChatGPT/Shopify shoppability and internal marketing/CX analytics agents, neither of which is a shopper-facing first-party agent.",
     "platformAgentSource": "https://www.marketing-interactive.com/openai-turns-chatgpt-into-a-personal-shopping-assistant"
@@ -568,12 +576,12 @@ const BUSINESSES = [
     "verified": "2026-10-24",
     "sales": 0.75,
     "salesNote": "2023 revenue, Sacra estimate",
-    "capability": "A+",
-    "capabilityNote": "Full agent checkout via UCP.",
+    "capability": "B",
+    "capabilityNote": "Full agent checkout via UCP, Google surfaces only.",
     "depth": "C",
     "depthNote": "Narrow Apparel catalog at $0.75B.",
-    "overall": "B+",
-    "overallNote": "Full agent checkout plus narrow depth; 60/40 blend lands at B+.",
+    "overall": "B-",
+    "overallNote": "Single-surface agent checkout plus narrow depth; 60/40 blend lands at B-.",
     "platformAgent": "none",
     "platformAgentNote": "No first-party shopper assistant found; SKIMS's agent presence in sources is third-party ChatGPT/Shopify shoppability only.",
     "platformAgentSource": "https://www.marketing-interactive.com/openai-turns-chatgpt-into-a-personal-shopping-assistant"
@@ -661,12 +669,12 @@ const BUSINESSES = [
     "verified": "2026-10-24",
     "sales": 0.86,
     "salesNote": "£646M FY25 ended Jul 31, 2025, approx $0.86B",
-    "capability": "A+",
-    "capabilityNote": "Full agent checkout via Google AI Mode, UCP.",
+    "capability": "B",
+    "capabilityNote": "Full agent checkout via Google AI Mode and UCP only.",
     "depth": "C",
     "depthNote": "Narrow Apparel catalog at $0.86B.",
-    "overall": "B+",
-    "overallNote": "Full agent checkout plus narrow depth; 60/40 blend lands at B+.",
+    "overall": "B-",
+    "overallNote": "Single-surface agent checkout plus narrow depth; 60/40 blend lands at B-.",
     "platformAgent": "none",
     "platformAgentNote": "Intercom-powered chatbot handles basic order tracking, returns questions and info collection, then passes to human agents; no cart/purchase action. Planned Google Cloud \"expert assistants\" were described as experiments, not a launched shopper agent.",
     "platformAgentSource": "https://juphy.com/blog/gymshark-review/"
@@ -685,12 +693,12 @@ const BUSINESSES = [
     "verified": "2026-10-24",
     "sales": 0.2,
     "salesNote": "reported over $200M, 2023",
-    "capability": "A+",
-    "capabilityNote": "Full agent checkout via Google AI Mode, UCP.",
+    "capability": "B",
+    "capabilityNote": "Full agent checkout via Google AI Mode and UCP only.",
     "depth": "C",
     "depthNote": "Narrow Apparel catalog at $0.20B.",
-    "overall": "B+",
-    "overallNote": "Full agent checkout plus narrow depth; 60/40 blend lands at B+.",
+    "overall": "B-",
+    "overallNote": "Single-surface agent checkout plus narrow depth; 60/40 blend lands at B-.",
     "platformAgent": "none",
     "platformAgentNote": "Only AI-powered search/discovery (Algolia NeuralSearch) found; no conversational assistant or cart action.",
     "platformAgentSource": "https://www.algolia.com/blog/ecommerce/how-3-retailers-are-using-ai-powered-search-and-discovery-to-crush-their-numbers"
@@ -709,12 +717,12 @@ const BUSINESSES = [
     "verified": "2026-10-24",
     "sales": 0.15,
     "salesNote": "reported over $150M, 2024",
-    "capability": "A+",
-    "capabilityNote": "Full agent checkout via Google AI Mode, UCP.",
+    "capability": "B",
+    "capabilityNote": "Full agent checkout via Google AI Mode and UCP only.",
     "depth": "C",
     "depthNote": "Narrow Apparel catalog at $0.15B.",
-    "overall": "B+",
-    "overallNote": "Full agent checkout plus narrow depth; 60/40 blend lands at B+.",
+    "overall": "B-",
+    "overallNote": "Single-surface agent checkout plus narrow depth; 60/40 blend lands at B-.",
     "platformAgent": "partial",
     "platformAgentNote": "Zowie-powered assistant deployed on Monos's site answers product/size questions, compares and recommends, and takes actions including checking order status and initiating returns/warranty requests; human completes any purchase.",
     "platformAgentSource": "https://getzowie.com/testimonials/monos"
@@ -1170,12 +1178,12 @@ const BUSINESSES = [
     "verified": "2026-10-24",
     "sales": 27.55,
     "salesNote": "NRF Top 100 Retailers 2026 (Kantar), 2025 US retail sales",
-    "capability": "A+",
-    "capabilityNote": "Full agent checkout via UCP.",
+    "capability": "B",
+    "capabilityNote": "Full agent checkout via UCP, Google surfaces only.",
     "depth": "A",
     "depthNote": "Specialist depth at $27.55B.",
-    "overall": "A+",
-    "overallNote": "Full agent checkout plus strong depth; 60/40 blend lands at A+.",
+    "overall": "B+",
+    "overallNote": "Single-surface agent checkout plus strong depth; 60/40 blend lands at B+.",
     "platformAgent": "none",
     "platformAgentNote": "Hey ARMA is associate-only: an AI assistant on associates' handhelds giving product knowledge, project advice, comparisons, and recommendations in-store; not a customer-facing agent and it does not transact.",
     "platformAgentSource": "https://newsroom.acehardware.com/2026-04-28-Ace-Hardware-Introduces-AI-Assistant-to-Strengthen-In-Store-Service"
@@ -2292,12 +2300,12 @@ const BUSINESSES = [
     "verified": "2026-10-24",
     "sales": 6.02,
     "salesNote": "NRF Top 100 Retailers 2026 (Kantar), 2025 US retail sales",
-    "capability": "A+",
-    "capabilityNote": "Full agent checkout via UCP.",
+    "capability": "B",
+    "capabilityNote": "Full agent checkout via UCP, Google surfaces only.",
     "depth": "A",
     "depthNote": "Specialist depth at $6.02B.",
-    "overall": "A+",
-    "overallNote": "Full agent checkout plus strong depth; 60/40 blend lands at A+.",
+    "overall": "B+",
+    "overallNote": "Single-surface agent checkout plus strong depth; 60/40 blend lands at B+.",
     "platformAgent": "partial",
     "platformAgentNote": "Academy's own Scout is an AI agent-based search assistant that makes shopping conversational/contextual (e.g., describing a camping weekend) and returns tailored recommendations; no checkout action documented.",
     "platformAgentSource": "https://www.cio.com/article/4182957/at-academy-sports-outdoors-ai-is-a-team-effort.html"
@@ -2449,12 +2457,12 @@ const BUSINESSES = [
     "verified": "2026-10-24",
     "sales": 5.3,
     "salesNote": "NRF Top 100 Retailers 2026 (Kantar), 2025 US retail sales; figure is the IKEA North America total",
-    "capability": "A+",
-    "capabilityNote": "Full agent checkout via UCP.",
+    "capability": "B",
+    "capabilityNote": "Full agent checkout via UCP, Google surfaces only.",
     "depth": "A",
     "depthNote": "Specialist depth at $5.30B.",
-    "overall": "A+",
-    "overallNote": "Full agent checkout plus strong depth; 60/40 blend lands at A+.",
+    "overall": "B+",
+    "overallNote": "Single-surface agent checkout plus strong depth; 60/40 blend lands at B+.",
     "platformAgent": "partial",
     "platformAgentNote": "Billie, IKEA's own chatbot, checks order status, reschedules deliveries and, per IKEA Spain, reschedules/cancels orders and handles missing/damaged delivery reports; human still completes purchases.",
     "platformAgentSource": "https://www.ikea.com/ie/en/customer-service/knowledge/articles/40gbf81c-6005-4250-g2c1-97b54838gbgc.html"

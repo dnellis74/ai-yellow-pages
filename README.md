@@ -42,9 +42,9 @@ Retailers 2026 (Kantar) 2025 US retail sales; other figures use the period
 stated in their note. Platforms (Shopify, Wix, BigCommerce, Squarespace,
 WooCommerce) get no figure by design. Where the checked banner differs from
 the NRF company (e.g. Stop & Shop for Ahold Delhaize USA, TJ Maxx for TJX),
-`salesNote` says whose total the figure is. Sales figures are for sorting
-and scale context only, not a quality signal; nulls sort last in the
-default size sort.
+`salesNote` says whose total the figure is. Sales figures are for scale
+context only, not a quality signal; nulls sort last in the size sort.
+The default sort is overall grade.
 
 To turn an outbound link into an affiliate link, replace that entry's `url`
 with your affiliate URL. Outbound links already carry `rel="sponsored"`, and
@@ -97,6 +97,13 @@ channels → B+; an agent API/schema or partial interaction with no verified
 cart or checkout → B; agent checkout that exists only for some
 merchants/segments → B; eligibility-gated only or networks with no single
 checkout → D.
+
+Single-provider agent surface (2026-11-02): full checkout available only
+through one provider's agent (Gemini-only UCP, or Shopify Agentic
+Storefronts selling only in Google AI Mode / Gemini) → B, not A+. A+
+requires checkout reachable by agents generally, not one provider's
+surface alone. Status stays checkout, since a third-party agent can
+complete a purchase through that surface.
 
 ### Depth grade
 
@@ -225,6 +232,21 @@ not by what it is called:
   llms.txt checks.
 
 ## Verification history
+
+- 2026-11-02 (single-surface checkout downgrade; default sort overall):
+  full checkout available only through one provider's agent surface
+  (Gemini-only UCP, or Shopify Agentic Storefronts selling only in
+  Google AI Mode / Gemini) now grades capability B, not A+. A+ requires
+  checkout reachable by agents generally, not one provider's surface
+  alone. 13 entries re-graded: Chewy, Target, Wayfair, Glossier, Vuori,
+  Spanx, SKIMS, Gymshark, Everlane, Monos, Ace Hardware, Academy
+  Sports, IKEA. Status stays checkout for all 13; capabilityNotes
+  rewritten; overall recomputed (Target A-, Chewy/Wayfair/Ace/Academy/
+  IKEA B+, the seven depth-C brands B-). Directory capability now A+
+  4, B+ 30, B 24, C- 32, D 17, F 6, ungraded 38; overall now A+ 3, A-
+  16, B+ 20, B 3, B- 30, C+ 18, C 7, C- 1, ungraded 53. Default listing
+  sort is now overall grade; size sort remains available. Portable
+  copy rebuilt.
 
 - 2026-10-29 — Chewy first-hand agent-checkout attempt (Oct 28-29).
   A third-party browser agent (Muse) signing in as the account holder
